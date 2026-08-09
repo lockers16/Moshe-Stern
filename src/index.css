@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    font-family: 'Assistant', sans-serif;
+    scroll-behavior: smooth;
+  }
+}
+
+.font-david {
+  font-family: 'David Libre', 'David', 'Frank Ruhl Libre', serif;
+}
+
+/* Diagonal Background Lines */
+.diagonal-bg-pattern {
+  background-image: 
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 28px,
+      rgba(24, 69, 124, 0.03) 28px,
+      rgba(24, 69, 124, 0.03) 30px
+    );
+}
+
+.diagonal-accent-pattern {
+  background-image: 
+    repeating-linear-gradient(
+      -35deg,
+      transparent,
+      transparent 40px,
+      rgba(234, 0, 17, 0.04) 40px,
+      rgba(234, 0, 17, 0.04) 42px,
+      transparent 42px,
+      transparent 80px,
+      rgba(24, 69, 124, 0.05) 80px,
+      rgba(24, 69, 124, 0.05) 82px
+    );
+}
+
+.diagonal-stripe-navy {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 140%;
+  height: 2px;
+  background-color: #18457c;
+  transform-origin: top left;
+  transform: rotate(-25deg);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.diagonal-stripe-red {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 140%;
+  height: 2px;
+  background-color: #ea0011;
+  transform-origin: top left;
+  transform: rotate(-25deg);
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5fa;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #18457c33;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #18457c66;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

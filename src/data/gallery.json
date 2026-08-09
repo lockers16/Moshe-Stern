@@ -1,0 +1,68 @@
+[
+  {
+    "id": "jerusalem-day-ceremony",
+    "title": "טקס יום ירושלים הממלכתי",
+    "location": "עיריית ירושלים, כיכר ספרא",
+    "date": "מאי 2024",
+    "description": "הנחיית הטקס המרכזי לציון יום ירושלים בהשתתפות נבחרי ציבור, אמנים ומאות תושבים.",
+    "categories": "טקסים לעיריית ירושלים, הנחיית מופעים",
+    "folder": "jerusalem_day",
+    "images": [
+      "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1200&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=1200&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1200&auto=format&fit=crop&q=80"
+    ]
+  },
+  {
+    "id": "memorial-day-ceremony",
+    "title": "טקס ערב יום הזיכרון לחללי מערכות ישראל",
+    "location": "אמפיתיאטרון עירוני",
+    "date": "אפריל 2024",
+    "description": "מעמד התייחדות וזיכרון בעדינות וברגישות עמוקה, שילוב קטעי קריאה ושירה.",
+    "categories": "טקסי זיכרון, טקסים לעיריית ירושלים",
+    "folder": "memorial_day",
+    "images": [
+      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1200&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&auto=format&fit=crop&q=80"
+    ]
+  },
+  {
+    "id": "summer-cultural-festival",
+    "title": "הנחיית מופע פתיחת פסטיבל הקיץ",
+    "location": "מתחם התרבות והמופעים",
+    "date": "יולי 2024",
+    "description": "הנחיה חיה מול קהל של אלפי משתתפים, קטעי קישור מלאי חיוך ואנרגיה.",
+    "categories": "הנחיית מופעים",
+    "folder": "summer_festival",
+    "images": [
+      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1200&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1200&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=1200&auto=format&fit=crop&q=80"
+    ]
+  },
+  {
+    "id": "distinguished-citizens-award",
+    "title": "טקס הענקת אות יקיר העיר",
+    "location": "תיאטרון ירושלים",
+    "date": "דצמבר 2023",
+    "description": "טקס הוקרה ממלכתי ומכובד למתנדבים ופעילי ציבור בולטים.",
+    "categories": "טקסים לעיריית ירושלים",
+    "folder": "citizens_award",
+    "images": [
+      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=1200&auto=format&fit=crop&q=80"
+    ]
+  },
+  {
+    "id": "remembrance-tribute-evening",
+    "title": "ערב שירים וזיכרון 'שירים לזכרם'",
+    "location": "היכל התרבות",
+    "date": "נובמבר 2023",
+    "description": "",
+    "categories": "טקסי זיכרון, הנחיית מופעים",
+    "folder": "remembrance_evening",
+    "images": [
+      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200&auto=format&fit=crop&q=80"
+    ]
+  }
+]

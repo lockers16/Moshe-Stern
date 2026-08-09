@@ -1,0 +1,7 @@
+{
+  "name": "כתוב | משה שטרן",
+  "description": "אתר שיווק אישי למשה שטרן - כותב נאומים ומנחה טקסים מקצועי. כולל דף בית, גלריית אירועים עם אלבומים פנימיים, דוגמאות לנאומים, ביקורות וטופס יצירת קשר.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
