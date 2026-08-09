@@ -7,8 +7,8 @@
   "whatsappNumber": "972547890123",
   "whatsappDefaultMessage": "שלום משה, הגעתי דרך האתר ואשמח להתייעץ בנוגע לאירוע או נאום.",
   "emailjs": {
-    "serviceId": "service_moshe_stern",
-    "templateId": "template_contact_form",
-    "publicKey": "YOUR_EMAILJS_PUBLIC_KEY"
+    "serviceId": "katuvContact",
+    "templateId": "template_kmzg8mn",
+    "publicKey": "jFXUgy4Hvh1eU9kZO"
   }
 }
