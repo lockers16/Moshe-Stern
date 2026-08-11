@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, PhoneCall, Sparkles, MessageSquareQuote, Mail } from 'lucide-react';
+import { Menu, X, Sparkles, MessageSquareQuote, Mail, Mic2, BookOpen, ChevronLeft, ArrowLeft } from 'lucide-react';
+import { Logo } from './Logo';
 
 interface HeaderProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  onScrollToReviews: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({
-  activeTab,
-  setActiveTab,
-  onScrollToReviews
-}) => {
+export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -23,146 +19,341 @@ export const Header: React.FC<HeaderProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { id: 'home', label: 'דף הבית' },
-    { id: 'gallery', label: 'גלריית אירועים' },
-    { id: 'speeches', label: 'דוגמאות לנאומים' },
-    { id: 'reviews', label: 'תגובות וביקורות' },
-    { id: 'about', label: 'אודות משה' },
-    { id: 'contact', label: 'פרטי קשר' },
-  ];
+  const isSpeechesSection = activeTab.startsWith('speeches');
+  const isHostingSection = activeTab.startsWith('hosting') || activeTab === 'gallery';
 
-  const handleNavClick = (item: { id: string; label: string }) => {
-    setActiveTab(item.id);
+  // Section-based theme styling:
+  // 1. Speeches: Classic Red (#ea0011) with Dark Navy buttons/accents
+  // 2. Hosting: Current Rich Blue (#18457c) with Red buttons/accents
+  // 3. Main Portal: Lighter Blue (#1e5ea8) with Red buttons/accents
+  const headerBgClass = isSpeechesSection
+    ? 'bg-[#ea0011] border-b border-[#c9000e]'
+    : isHostingSection
+    ? 'bg-[#18457c] border-b border-[#143c6d]'
+    : 'bg-[#1e5ea8] border-b border-[#1b5496]'; // Lighter vibrant blue for main portal
+
+  const contactButtonClass = isSpeechesSection
+    ? activeTab === 'contact'
+      ? 'bg-white text-[#ea0011]'
+      : 'bg-[#112b4e] hover:bg-[#0c1f36] text-white shadow-md'
+    : activeTab === 'contact'
+    ? 'bg-white text-[#18457c]'
+    : 'bg-[#ea0011] hover:bg-[#c9000e] text-white shadow-md';
+
+  const handleNavClick = (tabId: string) => {
+    setActiveTab(tabId);
     setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-[#18457c] shadow-lg shadow-[#18457c]/20 border-b border-[#245999]'
-          : 'bg-[#18457c] border-b border-[#143c6d]'
-      }`}
-    >
-      <div className="max-w-[1280px] mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
-        {/* Brand Logo - כתוב | משה שטרן */}
+    <header className={`sticky top-0 z-50 transition-colors duration-300 ${headerBgClass} ${isScrolled ? 'shadow-xl' : ''}`}>
+      <div className="max-w-[1280px] mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-4">
+        
+        {/* Rightmost: Brand Logo */}
         <button
-          onClick={() => {
-            setActiveTab('home');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-          className="flex items-center gap-3 text-right focus:outline-none group text-white cursor-pointer"
+          onClick={() => handleNavClick('home')}
+          className="flex items-center gap-2.5 text-right focus:outline-none group text-white cursor-pointer select-none"
+          title="חזרה לדף הבית הראשי"
         >
-          <div className="w-10 h-10 rounded-lg bg-[#ea0011] flex items-center justify-center text-white shadow-md shadow-[#ea0011]/30 group-hover:scale-105 transition-transform duration-200 shrink-0">
-            <Sparkles className="w-5 h-5" />
-          </div>
+          {/* Logo square emblem */}
+          <Logo size="md" className="group-hover:scale-105 transition-transform duration-200" />
+
           <div>
-            <div className="font-extrabold text-2xl md:text-3xl tracking-tight text-white flex items-center gap-2 font-['Assistant'] leading-tight">
+            <div className="font-black text-xl md:text-2xl tracking-tight text-white flex items-center gap-1.5 font-['Assistant'] leading-tight">
               <span>כתוב</span>
+              <span className="text-white/80 font-normal text-sm md:text-base hidden sm:inline">|</span>
+              <span className="text-white/90 text-sm md:text-base hidden sm:inline font-semibold">משה שטרן</span>
             </div>
-            <div className="text-xs text-[#d6e3f8] font-semibold tracking-wide">
-              משה שטרן
+            <div className="text-[10px] sm:text-xs text-white/90 font-medium tracking-wide">
+              נאומים, תוכן והנחייה
             </div>
           </div>
         </button>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2">
-          {navItems.map((item) => {
-            const isActive = activeTab === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item)}
-                className={`relative px-3.5 py-1.5 text-sm font-semibold transition-all duration-200 rounded-lg cursor-pointer flex items-center gap-1.5 ${
-                  isActive
-                    ? 'text-white font-bold bg-[#245999]'
-                    : 'text-white/85 hover:text-white hover:bg-[#204f88]'
-                }`}
-              >
-                {item.id === 'reviews' && <MessageSquareQuote className="w-3.5 h-3.5 text-[#ffdad5]" />}
-                <span>{item.label}</span>
-                {isActive && (
-                  <span className="absolute bottom-0.5 left-3 right-3 h-0.5 bg-[#ea0011] rounded-full" />
-                )}
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* Header Right Actions */}
-        <div className="flex items-center gap-2.5">
-          <a
-            href="tel:0547890123"
-            className="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-[#d6e3f8] hover:text-white px-3 py-2 rounded-lg bg-[#204f88] hover:bg-[#245999] transition-colors border border-white/10"
-            title="חיוג ישיר"
-          >
-            <PhoneCall className="w-3.5 h-3.5 text-[#ffdad5]" />
-            <span dir="ltr">054-789-0123</span>
-          </a>
-
+        {/* Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 text-sm font-semibold">
+          
+          {/* 1. דף הבית (Main Home) */}
           <button
-            onClick={() => {
-              setActiveTab('contact');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            className={`px-4 py-2 rounded-lg text-xs md:text-sm font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${
-              activeTab === 'contact'
-                ? 'bg-white text-[#18457c]'
-                : 'bg-[#ea0011] hover:bg-[#c9000e] text-white shadow-sm hover:shadow-md'
+            onClick={() => handleNavClick('home')}
+            className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+              activeTab === 'home'
+                ? 'bg-white/20 text-white font-bold shadow-xs'
+                : 'text-white/90 hover:text-white hover:bg-white/10'
             }`}
           >
-            <Mail className="w-3.5 h-3.5" />
+            דף הבית
+          </button>
+
+          {/* 2. אודות משה (Moved to right, next to home) */}
+          <button
+            onClick={() => handleNavClick('about')}
+            className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+              activeTab === 'about'
+                ? 'bg-white/20 text-white font-bold shadow-xs'
+                : 'text-white/90 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            אודות משה
+          </button>
+
+          {/* ================= IF IN HOSTING SECTION ================= */}
+          {isHostingSection && (
+            <>
+              {/* Distinctive Section Button / Rectangle (שירותי הנחיה) */}
+              <button
+                onClick={() => handleNavClick('hosting-home')}
+                className={`px-3.5 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 border shadow-sm ${
+                  activeTab === 'hosting-home'
+                    ? 'bg-[#ea0011] text-white border-white/30 shadow-md scale-105'
+                    : 'bg-white/15 text-white hover:bg-white/25 border-white/20'
+                }`}
+              >
+                <Mic2 className="w-3.5 h-3.5" />
+                <span>שירותי הנחיה</span>
+              </button>
+
+              {/* גלריית אירועים */}
+              <button
+                onClick={() => handleNavClick('hosting-gallery')}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  activeTab === 'hosting-gallery'
+                    ? 'bg-white/20 text-white font-bold shadow-xs underline decoration-[#ea0011] decoration-2 underline-offset-4'
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                גלריית אירועים
+              </button>
+
+              {/* תגובות וביקורות להנחיות */}
+              <button
+                onClick={() => handleNavClick('hosting-reviews')}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1 ${
+                  activeTab === 'hosting-reviews'
+                    ? 'bg-white/20 text-white font-bold shadow-xs underline decoration-[#ea0011] decoration-2 underline-offset-4'
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                <MessageSquareQuote className="w-3.5 h-3.5 text-[#ffdad5]" />
+                <span>תגובות וביקורות</span>
+              </button>
+
+              {/* Switch link to Speeches */}
+              <button
+                onClick={() => handleNavClick('speeches-home')}
+                className="text-xs text-white/80 hover:text-white hover:bg-white/10 px-2.5 py-1 rounded-md transition-all cursor-pointer mr-1"
+                title="מעבר לאזור שירותי כתיבת נאומים"
+              >
+                לשירותי נאומים ←
+              </button>
+            </>
+          )}
+
+          {/* ================= IF IN SPEECHES SECTION ================= */}
+          {isSpeechesSection && (
+            <>
+              {/* Distinctive Section Button / Rectangle (שירותי כתיבת נאומים) */}
+              <button
+                onClick={() => handleNavClick('speeches-home')}
+                className={`px-3.5 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 border shadow-sm ${
+                  activeTab === 'speeches-home'
+                    ? 'bg-[#112b4e] text-white border-white/30 shadow-md scale-105'
+                    : 'bg-white/15 text-white hover:bg-white/25 border-white/20'
+                }`}
+              >
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>שירותי כתיבת נאומים</span>
+              </button>
+
+              {/* דוגמאות לנאומים */}
+              <button
+                onClick={() => handleNavClick('speeches-full')}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                  activeTab === 'speeches-full'
+                    ? 'bg-white/20 text-white font-bold shadow-xs underline decoration-white decoration-2 underline-offset-4'
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                דוגמאות לנאומים
+              </button>
+
+              {/* תגובות וביקורות לנאומים */}
+              <button
+                onClick={() => handleNavClick('speeches-reviews')}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1 ${
+                  activeTab === 'speeches-reviews'
+                    ? 'bg-white/20 text-white font-bold shadow-xs underline decoration-white decoration-2 underline-offset-4'
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                <MessageSquareQuote className="w-3.5 h-3.5 text-white/90" />
+                <span>תגובות וביקורות</span>
+              </button>
+
+              {/* Switch link to Hosting */}
+              <button
+                onClick={() => handleNavClick('hosting-home')}
+                className="text-xs text-white/80 hover:text-white hover:bg-white/10 px-2.5 py-1 rounded-md transition-all cursor-pointer mr-1"
+                title="מעבר לאזור שירותי הנחיית טקסים"
+              >
+                לשירותי הנחיה ←
+              </button>
+            </>
+          )}
+
+          {/* ================= IF IN MAIN PORTAL ================= */}
+          {!isHostingSection && !isSpeechesSection && (
+            <>
+              {/* Button: שירותי הנחיה */}
+              <button
+                onClick={() => handleNavClick('hosting-home')}
+                className="px-3.5 py-1.5 rounded-lg font-bold bg-[#18457c] hover:bg-[#123662] text-white transition-all cursor-pointer flex items-center gap-1.5 shadow-sm border border-white/20 hover:scale-105"
+              >
+                <Mic2 className="w-3.5 h-3.5 text-[#ea0011]" />
+                <span>שירותי הנחיה</span>
+              </button>
+
+              {/* Button: שירותי כתיבת נאומים */}
+              <button
+                onClick={() => handleNavClick('speeches-home')}
+                className="px-3.5 py-1.5 rounded-lg font-bold bg-[#ea0011] hover:bg-[#c9000e] text-white transition-all cursor-pointer flex items-center gap-1.5 shadow-sm border border-white/20 hover:scale-105"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-white" />
+                <span>שירותי כתיבת נאומים</span>
+              </button>
+            </>
+          )}
+
+        </nav>
+
+        {/* Header Left Actions: Contact Button & Mobile Toggle */}
+        <div className="flex items-center gap-2">
+          {/* Contact Button */}
+          <button
+            onClick={() => handleNavClick('contact')}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${contactButtonClass}`}
+          >
+            <Mail className="w-4 h-4" />
             <span>פרטי קשר</span>
           </button>
 
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="פתח תפריט"
-            className="lg:hidden p-2 text-white hover:text-[#ffdad5] rounded-lg hover:bg-[#204f88] transition-colors cursor-pointer"
+            aria-label="פתח תפריט ניווט"
+            className="lg:hidden p-2 text-white hover:bg-white/10 rounded-lg transition-colors cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
+
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#18457c] border-t border-[#245999] px-4 py-4 space-y-1 shadow-2xl animate-in slide-in-from-top-2 duration-200">
-          {navItems.map((item) => {
-            const isActive = activeTab === item.id;
-            return (
+        <div className="lg:hidden bg-black/30 backdrop-blur-md border-t border-white/15 px-4 py-4 space-y-2 shadow-2xl text-right animate-in slide-in-from-top-2 duration-200">
+          
+          <div className="grid grid-cols-2 gap-2 pb-2 border-b border-white/15">
+            <button
+              onClick={() => handleNavClick('home')}
+              className={`py-2 px-3 rounded-lg text-xs font-bold text-center ${
+                activeTab === 'home' ? 'bg-white text-[#112b4e]' : 'bg-white/15 text-white'
+              }`}
+            >
+              דף הבית
+            </button>
+            <button
+              onClick={() => handleNavClick('about')}
+              className={`py-2 px-3 rounded-lg text-xs font-bold text-center ${
+                activeTab === 'about' ? 'bg-white text-[#112b4e]' : 'bg-white/15 text-white'
+              }`}
+            >
+              אודות משה
+            </button>
+          </div>
+
+          {/* Section 1: שירותי הנחיה */}
+          <div className="pt-2">
+            <div className="text-[11px] font-bold text-white/70 px-2 pb-1">שירותי הנחיית טקסים</div>
+            <div className="space-y-1">
               <button
-                key={item.id}
-                onClick={() => handleNavClick(item)}
-                className={`w-full text-right px-4 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center justify-between cursor-pointer ${
-                  isActive
-                    ? 'bg-[#245999] text-white font-bold border-r-4 border-[#ea0011]'
-                    : 'text-white/90 hover:bg-[#204f88] hover:text-white'
+                onClick={() => handleNavClick('hosting-home')}
+                className={`w-full text-right px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between ${
+                  activeTab === 'hosting-home' ? 'bg-white/25 text-white font-bold' : 'text-white/90 hover:bg-white/10'
                 }`}
               >
-                <div className="flex items-center gap-2">
-                  {item.id === 'reviews' && <MessageSquareQuote className="w-4 h-4 text-[#ffdad5]" />}
-                  <span>{item.label}</span>
-                </div>
+                <span>דף הבית להנחיות</span>
+                <Mic2 className="w-3.5 h-3.5" />
               </button>
-            );
-          })}
-
-          <div className="pt-3 mt-2 border-t border-[#245999] flex flex-col gap-2">
-            <a
-              href="tel:0547890123"
-              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-[#204f88] text-white font-medium text-xs"
-            >
-              <PhoneCall className="w-3.5 h-3.5 text-[#ffdad5]" />
-              <span>חיוג ישיר: 054-789-0123</span>
-            </a>
+              <button
+                onClick={() => handleNavClick('hosting-gallery')}
+                className={`w-full text-right px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between ${
+                  activeTab === 'hosting-gallery' ? 'bg-white/25 text-white font-bold' : 'text-white/90 hover:bg-white/10'
+                }`}
+              >
+                <span>גלריית אירועים מלאה</span>
+                <ArrowLeft className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => handleNavClick('hosting-reviews')}
+                className={`w-full text-right px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between ${
+                  activeTab === 'hosting-reviews' ? 'bg-white/25 text-white font-bold' : 'text-white/90 hover:bg-white/10'
+                }`}
+              >
+                <span>ביקורות והמלצות להנחיות</span>
+                <MessageSquareQuote className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
+
+          {/* Section 2: שירותי כתיבת נאומים */}
+          <div className="pt-2 border-t border-white/15">
+            <div className="text-[11px] font-bold text-white/70 px-2 pb-1">שירותי כתיבת נאומים</div>
+            <div className="space-y-1">
+              <button
+                onClick={() => handleNavClick('speeches-home')}
+                className={`w-full text-right px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between ${
+                  activeTab === 'speeches-home' ? 'bg-white/25 text-white font-bold' : 'text-white/90 hover:bg-white/10'
+                }`}
+              >
+                <span>דף הבית לנאומים</span>
+                <BookOpen className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => handleNavClick('speeches-full')}
+                className={`w-full text-right px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between ${
+                  activeTab === 'speeches-full' ? 'bg-white/25 text-white font-bold' : 'text-white/90 hover:bg-white/10'
+                }`}
+              >
+                <span>דוגמאות לנאומים מלאים</span>
+                <ArrowLeft className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => handleNavClick('speeches-reviews')}
+                className={`w-full text-right px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between ${
+                  activeTab === 'speeches-reviews' ? 'bg-white/25 text-white font-bold' : 'text-white/90 hover:bg-white/10'
+                }`}
+              >
+                <span>ביקורות והמלצות לנאומים</span>
+                <MessageSquareQuote className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+
+          <div className="pt-2 border-t border-white/15">
+            <button
+              onClick={() => handleNavClick('contact')}
+              className={`w-full py-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-2 ${contactButtonClass}`}
+            >
+              <Mail className="w-4 h-4" />
+              <span>יצירת קשר עם משה</span>
+            </button>
+          </div>
+
         </div>
       )}
+
     </header>
   );
 };

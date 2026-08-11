@@ -1,12 +1,39 @@
 import React, { useState } from 'react';
 import { Star, MessageSquare, Quote } from 'lucide-react';
-import reviewsData from '../data/reviews.json';
+import reviewsHostingData from '../data/reviewsHosting.json';
+import reviewsSpeechesData from '../data/reviewsSpeeches.json';
 import { ReviewItem } from '../types';
 import { ReviewModal } from './ReviewModal';
 
-export const ReviewsPage: React.FC = () => {
-  const reviews: ReviewItem[] = reviewsData;
+interface ReviewsPageProps {
+  type?: 'hosting' | 'speeches' | 'all';
+}
+
+export const ReviewsPage: React.FC<ReviewsPageProps> = ({ type = 'all' }) => {
+  const reviews: ReviewItem[] =
+    type === 'hosting'
+      ? reviewsHostingData
+      : type === 'speeches'
+      ? reviewsSpeechesData
+      : [...reviewsHostingData, ...reviewsSpeechesData];
+
   const [selectedReview, setSelectedReview] = useState<ReviewItem | null>(null);
+
+  const pageTitle =
+    type === 'hosting'
+      ? 'תגובות וביקורות – שירותי הנחיית טקסים'
+      : type === 'speeches'
+      ? 'תגובות וביקורות – שירותי כתיבת נאומים'
+      : 'תגובות וביקורות';
+
+  const pageSubtitle =
+    type === 'hosting'
+      ? 'המלצות וביקורות של לקוחות, עיריות ומארגני אירועים שהונחו על ידי משה שטרן'
+      : type === 'speeches'
+      ? 'המלצות וביקורות של נואמים, בעלי שמחה וארגונים שנכתבו עבורם נאומים וטקסטים אישיים'
+      : 'המלצות וביקורות של לקוחות ושותפים שעבדו עם משה שטרן';
+
+  const accentColor = type === 'speeches' ? '#ea0011' : '#18457c';
 
   return (
     <section className="py-12 md:py-16 bg-[#f5f8fc] relative overflow-hidden" id="reviews-page">
@@ -23,10 +50,10 @@ export const ReviewsPage: React.FC = () => {
             <span>מילים מהלב של לקוחות ושותפים</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-extrabold text-[#112b4e] tracking-tight">
-            תגובות וביקורות
+            {pageTitle}
           </h1>
           <p className="text-base md:text-lg text-[#2d4869] leading-relaxed">
-            המלצות וביקורות של זוגות, משפחות ומנהלי אירועים שעבדו עם משה שטרן. לחצו על כל ביקורת לפתיחת התוכן המלא.
+            {pageSubtitle}. לחצו על כל ביקורת לפתיחת התוכן המלא.
           </p>
         </div>
 
@@ -56,7 +83,13 @@ export const ReviewsPage: React.FC = () => {
                   )}
 
                   {hasSubject && (
-                    <span className="text-[11px] font-bold text-[#18457c] bg-[#eef3f8] px-2.5 py-1 rounded-md border border-[#18457c]/10">
+                    <span
+                      className={`text-[11px] font-bold px-2.5 py-1 rounded-md border ${
+                        type === 'speeches'
+                          ? 'bg-[#fff5f5] text-[#ea0011] border-[#ea0011]/20'
+                          : 'bg-[#eef3f8] text-[#18457c] border-[#18457c]/10'
+                      }`}
+                    >
                       {review.subject}
                     </span>
                   )}
@@ -113,3 +146,4 @@ export const ReviewsPage: React.FC = () => {
     </section>
   );
 };
+

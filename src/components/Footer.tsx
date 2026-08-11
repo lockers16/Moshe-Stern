@@ -1,6 +1,7 @@
 import React from 'react';
 import { Sparkles, Phone, Mail, MessageCircle, Heart, ArrowUp } from 'lucide-react';
 import siteConfig from '../data/siteConfig.json';
+import { Logo } from './Logo';
 
 interface FooterProps {
   onNavigate: (tabId: string) => void;
@@ -25,9 +26,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Column 1: Brand & Bio (5 cols) */}
           <div className="lg:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-[#ea0011] flex items-center justify-center text-white shadow-md shadow-[#ea0011]/30">
-                <Sparkles className="w-5 h-5" />
-              </div>
+              <Logo size="md" />
               <div>
                 <span className="font-bold text-2xl tracking-tight text-white font-['Assistant']">
                   {siteConfig.siteName}
@@ -61,47 +60,72 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Column 2: Quick Navigation (3 cols) */}
-          <div className="lg:col-span-3 space-y-3">
+          {/* Column 2: Quick Navigation (4 cols) */}
+          <div className="lg:col-span-4 space-y-3">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider border-b border-white/20 pb-2">
-              ניווט באתר
+              ניווט מהיר
             </h4>
-            <ul className="space-y-2 text-xs text-[#d6e3f8]">
-              <li>
-                <button onClick={() => onNavigate('home')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
-                  דף הבית
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('gallery')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
-                  גלריית תמונות מאירועים
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('speeches')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
-                  דוגמאות לנאומים
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('reviews')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
-                  תגובות וביקורות
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('about')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
-                  אודות משה שטרן
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('contact')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
-                  פרטי קשר
-                </button>
-              </li>
-            </ul>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-[#d6e3f8]">
+              <div>
+                <div className="font-bold text-white mb-1">שירותי הנחיה:</div>
+                <ul className="space-y-1.5 pr-1">
+                  <li>
+                    <button onClick={() => onNavigate('hosting-home')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
+                      • דף הבית להנחיות
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => onNavigate('hosting-gallery')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
+                      • גלריית אירועים
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => onNavigate('hosting-reviews')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
+                      • ביקורות להנחיות
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <div className="font-bold text-white mb-1">שירותי נאומים:</div>
+                <ul className="space-y-1.5 pr-1">
+                  <li>
+                    <button onClick={() => onNavigate('speeches-home')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
+                      • דף הבית לנאומים
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => onNavigate('speeches-full')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
+                      • דוגמאות לנאומים
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => onNavigate('speeches-reviews')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
+                      • ביקורות לנאומים
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="pt-2 flex items-center gap-4 text-xs text-[#d6e3f8] border-t border-white/10">
+              <button onClick={() => onNavigate('home')} className="hover:text-[#ea0011] font-semibold cursor-pointer">
+                דף הבית הראשי
+              </button>
+              <span>•</span>
+              <button onClick={() => onNavigate('about')} className="hover:text-[#ea0011] font-semibold cursor-pointer">
+                אודות משה
+              </button>
+              <span>•</span>
+              <button onClick={() => onNavigate('contact')} className="hover:text-[#ea0011] font-semibold cursor-pointer">
+                פרטי קשר
+              </button>
+            </div>
           </div>
 
-          {/* Column 3: Direct Contact (4 cols) */}
-          <div className="lg:col-span-4 space-y-3">
+          {/* Column 3: Direct Contact (3 cols) */}
+          <div className="lg:col-span-3 space-y-3">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider border-b border-white/20 pb-2">
               יצירת קשר ישירה
             </h4>

@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { HostingHome } from './components/HostingHome';
+import { SpeechesHome } from './components/SpeechesHome';
 import { PhotoGallery } from './components/PhotoGallery';
 import { SpeechesSection } from './components/SpeechesSection';
 import { ReviewsPage } from './components/ReviewsPage';
@@ -9,12 +11,36 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { MessageCircle } from 'lucide-react';
 import siteConfig from './data/siteConfig.json';
+import { tabToUrlMap, getInitialTabFromLocation, urlToTabMap } from './navigation';
 
-export function App() {
-  const [activeTab, setActiveTab] = useState<string>('home');
+interface AppProps {
+  initialTab?: string;
+}
+
+export function App({ initialTab }: AppProps) {
+  const [activeTab, setActiveTab] = useState<string>(() => {
+    return initialTab || getInitialTabFromLocation();
+  });
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const tab = getInitialTabFromLocation();
+      setActiveTab(tab);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const handleNavigate = (tabId: string) => {
     setActiveTab(tabId);
+    const targetUrl = tabToUrlMap[tabId] || '/index.html';
+    
+    // Update browser URL if changed
+    if (window.location.pathname !== targetUrl && !window.location.pathname.endsWith(targetUrl)) {
+      window.history.pushState({ tab: tabId }, '', targetUrl);
+    }
+    
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -25,12 +51,11 @@ export function App() {
       <Header
         activeTab={activeTab}
         setActiveTab={handleNavigate}
-        onScrollToReviews={() => handleNavigate('reviews')}
       />
 
       {/* Main Content Area based on activeTab */}
       <main className="flex-grow">
-        {/* Home Tab: Clean Layout with Hero (4 buttons) and "הקטע השני" (About) only */}
+        {/* 1. Main Portal Home (Hero + About) */}
         {activeTab === 'home' && (
           <div className="space-y-0">
             <Hero onNavigate={handleNavigate} />
@@ -38,27 +63,47 @@ export function App() {
           </div>
         )}
 
-        {/* Gallery Tab: Photo albums & filters */}
-        {activeTab === 'gallery' && (
-          <PhotoGallery />
-        )}
-
-        {/* Speeches Tab: Continuous David font speeches list */}
-        {activeTab === 'speeches' && (
-          <SpeechesSection />
-        )}
-
-        {/* Reviews Tab: 3-column reviews page with modal */}
-        {activeTab === 'reviews' && (
-          <ReviewsPage />
-        )}
-
-        {/* About Tab: Full Moshe Stern introduction */}
+        {/* 2. About Section */}
         {activeTab === 'about' && (
           <AboutSection onNavigateToContact={() => handleNavigate('contact')} />
         )}
 
-        {/* Contact Tab: Phone, WhatsApp, and form */}
+        {/* 3. Hosting Section: Home (with 3 gallery taste items) */}
+        {activeTab === 'hosting-home' && (
+          <HostingHome onNavigate={handleNavigate} />
+        )}
+
+        {/* 4. Hosting Section: Full Photo Gallery */}
+        {(activeTab === 'hosting-gallery' || activeTab === 'gallery') && (
+          <PhotoGallery />
+        )}
+
+        {/* 5. Hosting Section: Reviews & Testimonials */}
+        {activeTab === 'hosting-reviews' && (
+          <ReviewsPage type="hosting" />
+        )}
+
+        {/* 6. Speeches Section: Home (with 3 speeches taste items) */}
+        {activeTab === 'speeches-home' && (
+          <SpeechesHome onNavigate={handleNavigate} />
+        )}
+
+        {/* 7. Speeches Section: Full Speeches List */}
+        {(activeTab === 'speeches-full' || activeTab === 'speeches') && (
+          <SpeechesSection />
+        )}
+
+        {/* 8. Speeches Section: Reviews & Testimonials */}
+        {activeTab === 'speeches-reviews' && (
+          <ReviewsPage type="speeches" />
+        )}
+
+        {/* Fallback general reviews if requested */}
+        {activeTab === 'reviews' && (
+          <ReviewsPage type="all" />
+        )}
+
+        {/* 9. Contact Tab */}
         {activeTab === 'contact' && (
           <ContactSection />
         )}

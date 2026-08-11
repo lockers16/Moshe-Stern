@@ -44,43 +44,47 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               שלום, שמי משה שטרן. אני כותב נאומים ומנחה טקסים עם ניסיון עשיר בליווי חופות, בר ובת מצווה, כנסים, אירועים עסקיים וטקסים ממלכתיים. המטרה שלי היא לזקק את הסיפור שלכם לטקסט מנוסח לעילא ומוגש בדיוק, ברגש ובחן.
             </p>
 
-            {/* The 4 requested buttons */}
+            {/* The core navigation buttons leading to the main sections */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-3 max-w-xl">
               
-              {/* 1. גלריית תמונות מטקסים */}
+              {/* 1. שירותי הנחיית טקסים */}
               <button
-                onClick={() => onNavigate('gallery')}
-                className="bg-white hover:bg-[#f1f5fa] text-[#18457c] border-2 border-[#18457c]/25 hover:border-[#18457c] px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm hover:shadow-md"
+                onClick={() => onNavigate('hosting-home')}
+                className="bg-white hover:bg-[#f1f5fa] text-[#18457c] border-2 border-[#18457c]/25 hover:border-[#18457c] px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm hover:shadow-md group"
               >
-                <Images className="w-5 h-5 text-[#ea0011]" />
-                <span>גלריית תמונות מטקסים</span>
+                <div className="w-8 h-8 rounded-lg bg-[#18457c]/10 group-hover:bg-[#18457c] group-hover:text-white text-[#18457c] flex items-center justify-center transition-colors">
+                  <Images className="w-4 h-4 text-[#ea0011] group-hover:text-white" />
+                </div>
+                <span>שירותי הנחיית טקסים</span>
               </button>
 
-              {/* 2. דוגמאות לנאומים */}
+              {/* 2. שירותי כתיבת נאומים */}
               <button
-                onClick={() => onNavigate('speeches')}
-                className="bg-white hover:bg-[#f1f5fa] text-[#18457c] border-2 border-[#18457c]/25 hover:border-[#18457c] px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm hover:shadow-md"
+                onClick={() => onNavigate('speeches-home')}
+                className="bg-white hover:bg-[#fff5f5] text-[#ea0011] border-2 border-[#ea0011]/25 hover:border-[#ea0011] px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm hover:shadow-md group"
               >
-                <BookOpen className="w-5 h-5 text-[#ea0011]" />
-                <span>דוגמאות לנאומים</span>
+                <div className="w-8 h-8 rounded-lg bg-[#ea0011]/10 group-hover:bg-[#ea0011] group-hover:text-white text-[#ea0011] flex items-center justify-center transition-colors">
+                  <BookOpen className="w-4 h-4 text-[#ea0011] group-hover:text-white" />
+                </div>
+                <span>שירותי כתיבת נאומים</span>
               </button>
 
-              {/* 3. תגובות וביקורות */}
+              {/* 3. אודות משה שטרן */}
               <button
-                onClick={() => onNavigate('reviews')}
-                className="bg-white hover:bg-[#f1f5fa] text-[#18457c] border-2 border-[#18457c]/25 hover:border-[#18457c] px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm hover:shadow-md"
+                onClick={() => onNavigate('about')}
+                className="bg-white hover:bg-[#f1f5fa] text-[#112b4e] border-2 border-[#18457c]/20 hover:border-[#18457c] px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm hover:shadow-md"
               >
-                <MessageSquare className="w-5 h-5 text-[#ea0011]" />
-                <span>תגובות וביקורות</span>
+                <MessageSquare className="w-4 h-4 text-[#18457c]" />
+                <span>אודות משה שטרן</span>
               </button>
 
-              {/* 4. יצירת קשר - כחול */}
+              {/* 4. יצירת קשר */}
               <button
                 onClick={() => onNavigate('contact')}
                 className="bg-[#18457c] hover:bg-[#123662] text-white px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base shadow-md hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer"
               >
-                <Mail className="w-5 h-5 text-[#ffdad5]" />
-                <span>יצירת קשר</span>
+                <Mail className="w-4 h-4 text-[#ffdad5]" />
+                <span>יצירת קשר וייעוץ</span>
               </button>
 
             </div>
