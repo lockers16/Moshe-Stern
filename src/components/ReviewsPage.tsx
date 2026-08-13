@@ -21,9 +21,9 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({ type = 'all' }) => {
 
   const pageTitle =
     type === 'hosting'
-      ? 'תגובות וביקורות – שירותי הנחיית טקסים'
+      ? 'תגובות וביקורות – הנחיית טקסים'
       : type === 'speeches'
-      ? 'תגובות וביקורות – שירותי כתיבת נאומים'
+      ? 'תגובות וביקורות – כתיבת נאומים'
       : 'תגובות וביקורות';
 
   const pageSubtitle =

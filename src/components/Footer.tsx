@@ -67,7 +67,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </h4>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs text-[#d6e3f8]">
               <div>
-                <div className="font-bold text-white mb-1">שירותי הנחיה:</div>
+                <div className="font-bold text-white mb-1">הנחיית טקסים:</div>
                 <ul className="space-y-1.5 pr-1">
                   <li>
                     <button onClick={() => onNavigate('hosting-home')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
@@ -88,7 +88,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </div>
 
               <div>
-                <div className="font-bold text-white mb-1">שירותי נאומים:</div>
+                <div className="font-bold text-white mb-1">כתיבת נאומים:</div>
                 <ul className="space-y-1.5 pr-1">
                   <li>
                     <button onClick={() => onNavigate('speeches-home')} className="hover:text-[#ea0011] transition-colors cursor-pointer">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, BookOpen, MessageSquare, ArrowLeft, PenTool, CheckCircle2, Star, Quote, Volume2 } from 'lucide-react';
+import { Sparkles, BookOpen, MessageSquare, ArrowLeft, PenTool, Star, Quote, Volume2 } from 'lucide-react';
 import speechesData from '../data/speeches.json';
 import reviewsSpeechesData from '../data/reviewsSpeeches.json';
 import { SpeechItem, ReviewItem } from '../types';
@@ -33,7 +33,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
             <div className="lg:col-span-7 space-y-6 text-right">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ea0011]/10 border border-[#ea0011]/20 text-[#ea0011] text-xs md:text-sm font-bold shadow-sm">
                 <PenTool className="w-4 h-4 text-[#ea0011]" />
-                <span>שירותי כתיבת נאומים וטקסטים • משה שטרן</span>
+                <span>כתיבת נאומים וטקסטים • משה שטרן</span>
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#112b4e] leading-[1.2] tracking-tight">
@@ -83,11 +83,6 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
                 <p className="text-xs sm:text-sm text-[#425d7e] leading-relaxed">
                   הכתיבה נעשית מתוך שותפות מלאה, בקצב הדיבור הנוח לכם, תוך הדרכה מעשית על אינטונציה, נשימות ועמידה מול קהל.
                 </p>
-
-                <div className="pt-2 flex items-center gap-2 text-xs font-bold text-[#18457c]">
-                  <CheckCircle2 className="w-4 h-4 text-[#ea0011]" />
-                  <span>כולל אימון והקלטות קוליות לתרגול שוטף</span>
-                </div>
               </div>
             </div>
 
@@ -310,7 +305,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
               onClick={() => onNavigate('hosting-home')}
               className="bg-white/15 hover:bg-white/25 text-white border border-white/20 px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all cursor-pointer"
             >
-              מעבר לשירותי הנחיית טקסים
+              מעבר להנחיית טקסים
             </button>
           </div>
         </div>

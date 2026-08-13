@@ -11,21 +11,27 @@ export const Logo: React.FC<LogoProps> = ({
   size = 'md',
   showText = false,
 }) => {
+  const boxSizeClasses = {
+    sm: 'p-1 rounded-lg',
+    md: 'p-1.5 rounded-xl',
+    lg: 'p-2 rounded-xl',
+    xl: 'p-2.5 rounded-2xl',
+  };
+
   const sizeClasses = {
-    sm: 'w-9 h-9',
-    md: 'w-11 h-11',
-    lg: 'w-14 h-14',
-    xl: 'w-20 h-20',
+    sm: 'h-7 sm:h-8',
+    md: 'h-8 sm:h-9',
+    lg: 'h-10 sm:h-12',
+    xl: 'h-14 sm:h-16',
   };
 
   return (
     <div className={`flex items-center gap-2.5 select-none ${className}`}>
-      {/* Crisp, undistorted vector emblem */}
-      <div className={`rounded-xl bg-white p-0.5 shadow-md flex items-center justify-center shrink-0 aspect-square overflow-hidden ${sizeClasses[size]}`}>
+      <div className={`bg-white shadow-xs flex items-center justify-center shrink-0 border border-white/20 ${boxSizeClasses[size]}`}>
         <img
-          src="/logo.svg"
+          src="/logo.png"
           alt="משה שטרן - נאומים, תוכן והנחייה"
-          className="w-full h-full object-contain"
+          className={`${sizeClasses[size]} w-auto object-contain shrink-0`}
           loading="eager"
         />
       </div>
@@ -43,3 +49,4 @@ export const Logo: React.FC<LogoProps> = ({
     </div>
   );
 };
+

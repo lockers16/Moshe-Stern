@@ -33,7 +33,7 @@ export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
             <div className="lg:col-span-7 space-y-6 text-right">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#18457c]/10 border border-[#18457c]/20 text-[#18457c] text-xs md:text-sm font-bold shadow-sm">
                 <Mic2 className="w-4 h-4 text-[#ea0011]" />
-                <span>שירותי הנחיית טקסים ואירועים • משה שטרן</span>
+                <span>הנחיית טקסים ואירועים • משה שטרן</span>
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#112b4e] leading-[1.2] tracking-tight">
@@ -311,7 +311,7 @@ export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
               onClick={() => onNavigate('speeches-home')}
               className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all cursor-pointer"
             >
-              מעבר לשירותי כתיבת נאומים
+              מעבר לכתיבת נאומים
             </button>
           </div>
         </div>

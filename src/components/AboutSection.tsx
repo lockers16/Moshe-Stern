@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserCheck, Award, CheckCircle2, HeartHandshake } from 'lucide-react';
+import { UserCheck, Award, HeartHandshake } from 'lucide-react';
 
 interface AboutSectionProps {
   onNavigateToContact?: () => void;
@@ -58,17 +58,6 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onNavigateToContact 
             <p className="text-base text-[#2d4869] leading-relaxed">
               הגישה שלי משלבת הקשבה מלאה, רגישות ודיוק בפרטים. אני מאמין שאין צורך בקלישאות או מילים מנופחות – העוצמה של נאום או טקס נובעת מפשטות, כנות, דיוק בזמנים וחיבור אותנטי עם הקהל.
             </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div className="bg-white p-4 rounded-xl border border-[#18457c]/15 text-sm font-semibold text-[#112b4e] flex items-center gap-2 shadow-xs">
-                <CheckCircle2 className="w-5 h-5 text-[#ea0011] shrink-0" />
-                <span>התאמה אישית מלאה לאופי הדובר</span>
-              </div>
-              <div className="bg-white p-4 rounded-xl border border-[#18457c]/15 text-sm font-semibold text-[#112b4e] flex items-center gap-2 shadow-xs">
-                <CheckCircle2 className="w-5 h-5 text-[#ea0011] shrink-0" />
-                <span>ליווי רגוע, מסודר ומדויק</span>
-              </div>
-            </div>
 
             {onNavigateToContact && (
               <div className="pt-3">

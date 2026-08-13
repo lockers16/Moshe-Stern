@@ -47,7 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             {/* The core navigation buttons leading to the main sections */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-3 max-w-xl">
               
-              {/* 1. שירותי הנחיית טקסים */}
+              {/* 1. הנחיית טקסים */}
               <button
                 onClick={() => onNavigate('hosting-home')}
                 className="bg-white hover:bg-[#f1f5fa] text-[#18457c] border-2 border-[#18457c]/25 hover:border-[#18457c] px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm hover:shadow-md group"
@@ -55,10 +55,10 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 <div className="w-8 h-8 rounded-lg bg-[#18457c]/10 group-hover:bg-[#18457c] group-hover:text-white text-[#18457c] flex items-center justify-center transition-colors">
                   <Images className="w-4 h-4 text-[#ea0011] group-hover:text-white" />
                 </div>
-                <span>שירותי הנחיית טקסים</span>
+                <span>הנחיית טקסים</span>
               </button>
 
-              {/* 2. שירותי כתיבת נאומים */}
+              {/* 2. כתיבת נאומים */}
               <button
                 onClick={() => onNavigate('speeches-home')}
                 className="bg-white hover:bg-[#fff5f5] text-[#ea0011] border-2 border-[#ea0011]/25 hover:border-[#ea0011] px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm hover:shadow-md group"
@@ -66,7 +66,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 <div className="w-8 h-8 rounded-lg bg-[#ea0011]/10 group-hover:bg-[#ea0011] group-hover:text-white text-[#ea0011] flex items-center justify-center transition-colors">
                   <BookOpen className="w-4 h-4 text-[#ea0011] group-hover:text-white" />
                 </div>
-                <span>שירותי כתיבת נאומים</span>
+                <span>כתיבת נאומים</span>
               </button>
 
               {/* 3. אודות משה שטרן */}
