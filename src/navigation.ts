@@ -1,28 +1,37 @@
 export const tabToUrlMap: Record<string, string> = {
-  'home': '/index.html',
-  'about': '/about.html',
-  'hosting-home': '/hosting.html',
-  'hosting-gallery': '/hosting-gallery.html',
-  'gallery': '/hosting-gallery.html',
-  'hosting-reviews': '/hosting-reviews.html',
-  'speeches-home': '/speeches.html',
-  'speeches-full': '/speeches-examples.html',
-  'speeches': '/speeches-examples.html',
-  'speeches-reviews': '/speeches-reviews.html',
-  'reviews': '/hosting-reviews.html',
-  'contact': '/contact.html',
+  'home': '/',
+  'about': '/about',
+  'hosting-home': '/hosting',
+  'hosting-gallery': '/hosting-gallery',
+  'gallery': '/hosting-gallery',
+  'hosting-reviews': '/hosting-reviews',
+  'speeches-home': '/speeches',
+  'speeches-full': '/speeches-examples',
+  'speeches': '/speeches-examples',
+  'speeches-reviews': '/speeches-reviews',
+  'reviews': '/hosting-reviews',
+  'contact': '/contact',
 };
 
 export const urlToTabMap: Record<string, string> = {
   '/': 'home',
+  '/index': 'home',
   '/index.html': 'home',
+  '/about': 'about',
   '/about.html': 'about',
+  '/hosting': 'hosting-home',
   '/hosting.html': 'hosting-home',
+  '/hosting-gallery': 'hosting-gallery',
   '/hosting-gallery.html': 'hosting-gallery',
+  '/hosting-reviews': 'hosting-reviews',
   '/hosting-reviews.html': 'hosting-reviews',
+  '/speeches': 'speeches-home',
   '/speeches.html': 'speeches-home',
+  '/speeches-examples': 'speeches-full',
   '/speeches-examples.html': 'speeches-full',
+  '/speeches-reviews': 'speeches-reviews',
   '/speeches-reviews.html': 'speeches-reviews',
+  '/contact': 'contact',
   '/contact.html': 'contact',
 };
 
@@ -35,16 +44,27 @@ export function getInitialTabFromLocation(): string {
   }
   
   // 2. Check current pathname matching against urlToTabMap
-  const path = window.location.pathname;
+  let path = window.location.pathname;
+  if (path.length > 1 && path.endsWith('/')) {
+    path = path.slice(0, -1);
+  }
   
   // Exact match
   if (urlToTabMap[path]) {
     return urlToTabMap[path];
   }
 
-  // Substring match (e.g., /hosting.html or /subfolder/hosting.html)
+  // Check clean path without .html
+  if (path.endsWith('.html')) {
+    const cleanPath = path.replace(/\.html$/, '');
+    if (urlToTabMap[cleanPath]) {
+      return urlToTabMap[cleanPath];
+    }
+  }
+
+  // Substring match
   for (const [url, tab] of Object.entries(urlToTabMap)) {
-    if (url !== '/' && path.endsWith(url)) {
+    if (url !== '/' && (path.endsWith(url) || path.endsWith(url + '.html'))) {
       return tab;
     }
   }

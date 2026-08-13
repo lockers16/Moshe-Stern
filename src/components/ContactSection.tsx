@@ -309,11 +309,11 @@ export const ContactSection: React.FC = () => {
                   />
                 </div>
 
-                <div className="pt-2 flex flex-col sm:flex-row gap-3">
+                <div className="pt-2">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex-1 bg-[#18457c] hover:bg-[#123662] disabled:opacity-70 text-white py-3 rounded-xl font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
+                    className="w-full bg-[#18457c] hover:bg-[#123662] disabled:opacity-70 text-white py-3.5 rounded-xl font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -321,15 +321,6 @@ export const ContactSection: React.FC = () => {
                       <Send className="w-4 h-4 text-[#ea0011]" />
                     )}
                     <span>{isSubmitting ? 'שולח פנייה...' : 'שליחת פרטים למשה'}</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleSendViaMailto}
-                    className="px-5 py-3 rounded-xl border border-[#18457c]/25 text-[#18457c] hover:bg-[#18457c]/5 text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    <Mail className="w-4 h-4" />
-                    <span>שליחה בדוא״ל</span>
                   </button>
                 </div>
               </form>

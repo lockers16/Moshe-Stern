@@ -43,7 +43,7 @@ export function App({ initialTab }: AppProps) {
 
   const handleNavigate = (tabId: string) => {
     setActiveTab(tabId);
-    const targetUrl = tabToUrlMap[tabId] || '/index.html';
+    const targetUrl = tabToUrlMap[tabId] || '/';
     
     // Update browser URL if changed
     if (window.location.pathname !== targetUrl && !window.location.pathname.endsWith(targetUrl)) {
