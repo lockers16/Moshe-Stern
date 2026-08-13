@@ -23,14 +23,23 @@ export function App({ initialTab }: AppProps) {
   });
 
   useEffect(() => {
-    const handlePopState = () => {
-      const tab = getInitialTabFromLocation();
-      setActiveTab(tab);
+    // Ensure the initial history entry has the current tab state
+    if (!window.history.state || !window.history.state.tab) {
+      window.history.replaceState({ tab: activeTab }, '');
+    }
+
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state && typeof event.state.tab === 'string') {
+        setActiveTab(event.state.tab);
+      } else {
+        const tab = getInitialTabFromLocation();
+        setActiveTab(tab);
+      }
     };
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [activeTab]);
 
   const handleNavigate = (tabId: string) => {
     setActiveTab(tabId);

@@ -28,24 +28,31 @@ export const urlToTabMap: Record<string, string> = {
 
 export function getInitialTabFromLocation(): string {
   if (typeof window === 'undefined') return 'home';
-  
-  // Check if root dataset specified a page
-  const rootEl = document.getElementById('root');
-  if (rootEl?.dataset?.page) {
-    return rootEl.dataset.page;
-  }
 
+  // 1. Check if current history state has a tab stored
+  if (window.history.state && typeof window.history.state.tab === 'string') {
+    return window.history.state.tab;
+  }
+  
+  // 2. Check current pathname matching against urlToTabMap
   const path = window.location.pathname;
+  
   // Exact match
   if (urlToTabMap[path]) {
     return urlToTabMap[path];
   }
 
-  // Substring match
+  // Substring match (e.g., /hosting.html or /subfolder/hosting.html)
   for (const [url, tab] of Object.entries(urlToTabMap)) {
-    if (path.endsWith(url) && url !== '/') {
+    if (url !== '/' && path.endsWith(url)) {
       return tab;
     }
+  }
+
+  // 3. Fallback: check dataset.page if path is root '/' or unknown
+  const rootEl = document.getElementById('root');
+  if (rootEl?.dataset?.page) {
+    return rootEl.dataset.page;
   }
 
   return 'home';
