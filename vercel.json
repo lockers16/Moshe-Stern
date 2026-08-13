@@ -1,0 +1,13 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/hosting", "destination": "/hosting.html" },
+    { "source": "/hosting-gallery", "destination": "/hosting-gallery.html" },
+    { "source": "/hosting-reviews", "destination": "/hosting-reviews.html" },
+    { "source": "/speeches", "destination": "/speeches.html" },
+    { "source": "/speeches-examples", "destination": "/speeches-examples.html" },
+    { "source": "/speeches-reviews", "destination": "/speeches-reviews.html" },
+    { "source": "/contact", "destination": "/contact.html" }
+  ]
+}
