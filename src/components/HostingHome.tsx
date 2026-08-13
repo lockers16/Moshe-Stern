@@ -70,7 +70,7 @@ export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-[#18457c]/20 bg-[#18457c] aspect-[4/3] group">
                 <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1NOmF-tGbAVynd4Xz4H_zGoAxnQCFljZ7Dj2zoniGimvZEV4t-lm7Pjp1a0ZiN-MWlKekFKTDCD5-tCeoUoX53E3tvLJZouOYb2qNkNmIikrJ2NjoYodj2k5KtDn5x7V48agMM2DPnOXq7QehLh8TxWz2y9amtyg6x6Cf_xEwRESV-XVHAdp2GY_tHqxpJTBI4RNbfGAaDot9cci6SFQ-zThfJEy2XWeQGaPmSTNnltPjXaJGsDr19A"
+                  src="/IMG-20260813-WA0031.jpg"
                   alt="משה שטרן מנחה אירוע"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
