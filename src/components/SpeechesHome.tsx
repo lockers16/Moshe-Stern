@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Sparkles, BookOpen, MessageSquare, ArrowLeft, PenTool, Star, Quote, Volume2 } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Sparkles, BookOpen, MessageSquare, ArrowLeft, PenTool, Star, Quote, FileText, Image as ImageIcon } from 'lucide-react';
 import speechesData from '../data/speeches.json';
 import reviewsSpeechesData from '../data/reviewsSpeeches.json';
+import featuredItems from '../data/featuredItems.json';
 import { SpeechItem, ReviewItem } from '../types';
 import { ReviewModal } from './ReviewModal';
 
@@ -11,12 +12,60 @@ interface SpeechesHomeProps {
 
 export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
   const speeches: SpeechItem[] = speechesData;
-  // Exactly 3 items for the speeches taste
-  const previewSpeeches = speeches.slice(0, 3);
-
   const reviews: ReviewItem[] = reviewsSpeechesData;
-  const previewReviews = reviews.slice(0, 3);
   const [selectedReview, setSelectedReview] = useState<ReviewItem | null>(null);
+
+  // Load items according to featuredItems.speechesExamples in order: [right, center, left]
+  const previewSpeeches = useMemo(() => {
+    const { right, center, left } = featuredItems.speechesExamples || {};
+    const requestedIds = [right, center, left].filter(Boolean);
+    const map = new Map(speeches.map((s) => [s.id, s]));
+    const list: SpeechItem[] = [];
+
+    requestedIds.forEach((id) => {
+      const item = map.get(id);
+      if (item && !list.some((existing) => existing.id === item.id)) {
+        list.push(item);
+      }
+    });
+
+    if (list.length < 3) {
+      for (const s of speeches) {
+        if (!list.some((existing) => existing.id === s.id)) {
+          list.push(s);
+          if (list.length === 3) break;
+        }
+      }
+    }
+
+    return list;
+  }, [speeches]);
+
+  // Load reviews according to featuredItems.speechesReviews in order: [right, center, left]
+  const previewReviews = useMemo(() => {
+    const { right, center, left } = featuredItems.speechesReviews || {};
+    const requestedIds = [right, center, left].filter(Boolean);
+    const map = new Map(reviews.map((r) => [r.id, r]));
+    const list: ReviewItem[] = [];
+
+    requestedIds.forEach((id) => {
+      const item = map.get(id);
+      if (item && !list.some((existing) => existing.id === item.id)) {
+        list.push(item);
+      }
+    });
+
+    if (list.length < 3) {
+      for (const r of reviews) {
+        if (!list.some((existing) => existing.id === r.id)) {
+          list.push(r);
+          if (list.length === 3) break;
+        }
+      }
+    }
+
+    return list;
+  }, [reviews]);
 
   return (
     <div className="bg-[#f5f8fc] space-y-16 pb-20">
@@ -61,7 +110,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
                   className="bg-white hover:bg-[#fff5f5] text-[#ea0011] border-2 border-[#ea0011]/25 hover:border-[#ea0011] px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-sm"
                 >
                   <MessageSquare className="w-5 h-5 text-[#ea0011]" />
-                  <span>תגובות וביקורות לנאומים</span>
+                  <span>המלצות וביקורות לנאומים</span>
                 </button>
               </div>
             </div>
@@ -91,7 +140,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
       </section>
 
 
-      {/* 2. Speeches Taste (טעימה מדוגמאות הנאומים - בדיוק 3 פריטים) */}
+      {/* 2. Speeches Taste (טעימה מדוגמאות הנאומים - פריטים מותאמים אישית) */}
       <section className="max-w-[1280px] mx-auto px-4 md:px-8 space-y-8 text-right">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2">
@@ -103,7 +152,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
               טעימה מדוגמאות הנאומים שנכתבו
             </h2>
             <p className="text-sm sm:text-base text-[#425d7e]">
-              3 דוגמאות מתוך קטגוריות שונות שנכתבו בהתאמה אישית מלאה
+              דוגמאות מתוך קטגוריות שונות שנכתבו בהתאמה אישית מלאה
             </p>
           </div>
 
@@ -111,18 +160,18 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
             onClick={() => onNavigate('speeches-full')}
             className="inline-flex items-center gap-2 text-sm font-bold text-[#ea0011] hover:text-[#c9000e] transition-colors cursor-pointer bg-white px-4 py-2 rounded-xl border border-[#ea0011]/25 shadow-xs self-start sm:self-auto"
           >
-            <span>לספריית הנאומים המלאה</span>
+            <span>לדוגמאות לנאומים</span>
             <ArrowLeft className="w-4 h-4" />
           </button>
         </div>
 
-        {/* 3 Preview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Preview Cards (centered flex/grid) */}
+        <div className="flex flex-wrap justify-center gap-6">
           {previewSpeeches.map((speech) => (
             <div
               key={speech.id}
               onClick={() => onNavigate('speeches-full')}
-              className="group bg-white rounded-2xl p-6 border border-[#ea0011]/15 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-4"
+              className="group bg-white rounded-2xl p-6 border border-[#ea0011]/15 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-4 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-[400px]"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -156,60 +205,48 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
       </section>
 
 
-      {/* 3. The 4 Steps Process of Speech Writing */}
-      <section className="bg-white py-12 border-y border-[#ea0011]/15">
+      {/* 3. Core Advantages of Moshe as Speechwriter */}
+      <section className="bg-white py-12 border-y border-[#ea0011]/10">
         <div className="max-w-[1280px] mx-auto px-4 md:px-8 space-y-8 text-right">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#112b4e]">
-              איך עובד תהליך כתיבת הנאום?
+              איך נבנה הנאום המנצח שלכם?
             </h2>
             <p className="text-sm sm:text-base text-[#425d7e]">
-              ארבעה שלבים פשוטים, נעימים ומובנים שמביאים לתוצאה מושלמת
+              תהליך כתיבה אישי, מובנה וקשוב שמבטיח שתרגישו בטוחים על הבמה
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <div className="p-5 rounded-2xl bg-[#fffafa] border border-[#ea0011]/15 space-y-2 text-right">
-              <div className="w-10 h-10 rounded-lg bg-[#ea0011] text-white font-bold flex items-center justify-center text-sm shadow-md">
-                1
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 rounded-2xl bg-[#fffafa] border border-[#ea0011]/15 space-y-3">
+              <div className="w-12 h-12 rounded-xl bg-[#ea0011] text-white flex items-center justify-center shadow-md">
+                <PenTool className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-base font-bold text-[#112b4e]">שיחת היכרות והקשבה</h3>
-              <p className="text-xs text-[#425d7e] leading-relaxed">
-                משוחחים בנחת, אוספים סיפורים, אנקדוטות ורגשות, ומגדירים יחד את אופי הנאום.
+              <h3 className="text-lg font-bold text-[#112b4e]">שיחת תחקיר והקשבה מעמיקה</h3>
+              <p className="text-xs sm:text-sm text-[#425d7e] leading-relaxed">
+                מבינים את הרקע, את הקהל, את הסיפורים הקטנים ואת המסר שחשוב לכם להעביר ברגע המיוחד.
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#fffafa] border border-[#ea0011]/15 space-y-2 text-right">
-              <div className="w-10 h-10 rounded-lg bg-[#ea0011] text-white font-bold flex items-center justify-center text-sm shadow-md">
-                2
+            <div className="p-6 rounded-2xl bg-[#fffafa] border border-[#ea0011]/15 space-y-3">
+              <div className="w-12 h-12 rounded-xl bg-[#18457c] text-white flex items-center justify-center shadow-md">
+                <BookOpen className="w-6 h-6 text-[#ffdad5]" />
               </div>
-              <h3 className="text-base font-bold text-[#112b4e]">כתיבה וניסוח מקצועי</h3>
-              <p className="text-xs text-[#425d7e] leading-relaxed">
-                משה מזקק את המילים למבנה מרתק, קצבי, מרגש ומדויק ללא שום קלישאות.
+              <h3 className="text-lg font-bold text-[#112b4e]">ניסוח מדויק ומותאם אישית</h3>
+              <p className="text-xs sm:text-sm text-[#425d7e] leading-relaxed">
+                כתיבה קולחת בגובה העיניים, שילוב עדין של הומור ורגש, ומבנה רטורי שמחזיק את הקהל מרותק.
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#fffafa] border border-[#ea0011]/15 space-y-2 text-right">
-              <div className="w-10 h-10 rounded-lg bg-[#ea0011] text-white font-bold flex items-center justify-center text-sm shadow-md">
-                3
+            <div className="p-6 rounded-2xl bg-[#fffafa] border border-[#ea0011]/15 space-y-3">
+              <div className="w-12 h-12 rounded-xl bg-[#ea0011] text-white flex items-center justify-center shadow-md">
+                <Sparkles className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-base font-bold text-[#112b4e]">דיוק ומשוב משותף</h3>
-              <p className="text-xs text-[#425d7e] leading-relaxed">
-                עוברים יחד על הטיוטה, מתקנים ומחדדים עד שכל משפט יושב בטבעיות על הלשון.
+              <h3 className="text-lg font-bold text-[#112b4e]">הדרכה לעמידה מול קהל</h3>
+              <p className="text-xs sm:text-sm text-[#425d7e] leading-relaxed">
+                הנחיות קריאה מעשיות, סימוני הדגשה ואינטונציה, והכנה מנטלית כדי שתעלו לבמה בביטחון מלא.
               </p>
             </div>
-
-            <div className="p-5 rounded-2xl bg-[#fffafa] border border-[#ea0011]/15 space-y-2 text-right">
-              <div className="w-10 h-10 rounded-lg bg-[#ea0011] text-white font-bold flex items-center justify-center text-sm shadow-md">
-                4
-              </div>
-              <h3 className="text-base font-bold text-[#112b4e]">אימון עמידה מול קהל</h3>
-              <p className="text-xs text-[#425d7e] leading-relaxed">
-                הדרכה על קצב דיבור, נשימות ודגשים קוליים, כדי שתעלו לבמה בביטחון מוחלט.
-              </p>
-            </div>
-
           </div>
         </div>
       </section>
@@ -221,10 +258,10 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ea0011]/10 text-[#ea0011] text-xs font-bold">
               <MessageSquare className="w-3.5 h-3.5 text-[#ea0011]" />
-              <span>המלצות כותבים ונואמים</span>
+              <span>המלצות לקוחות</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#112b4e]">
-              מה אומרים על כתיבת הנאומים?
+              מה מספרים מי שנאמו עם הטקסטים של משה?
             </h2>
           </div>
 
@@ -232,54 +269,121 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
             onClick={() => onNavigate('speeches-reviews')}
             className="inline-flex items-center gap-2 text-sm font-bold text-[#ea0011] hover:text-[#c9000e] transition-colors cursor-pointer bg-white px-4 py-2 rounded-xl border border-[#ea0011]/25 shadow-xs self-start sm:self-auto"
           >
-            <span>לכל הביקורות וההמלצות</span>
+            <span>לכל ההמלצות והביקורות</span>
             <ArrowLeft className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {previewReviews.map((rev) => (
-            <div
-              key={rev.id}
-              onClick={() => setSelectedReview(rev)}
-              className="bg-white p-6 rounded-2xl border border-[#ea0011]/15 shadow-md hover:shadow-xl transition-all cursor-pointer flex flex-col justify-between space-y-4"
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  {typeof rev.rating === 'number' && rev.rating > 0 ? (
+        <div className="flex flex-wrap justify-center gap-6">
+          {previewReviews.map((rev) => {
+            const hasRating = typeof rev.rating === 'number' && rev.rating > 0;
+            const hasSubject = rev.subject && rev.subject.trim() !== '';
+            const hasDate = rev.date && rev.date.trim() !== '';
+            
+            let attachmentUrl = '';
+            let isPdf = false;
+            if (typeof rev.attachment === 'string' && rev.attachment.trim() !== '') {
+              attachmentUrl = rev.attachment.trim();
+              isPdf = attachmentUrl.toLowerCase().endsWith('.pdf');
+            } else if (typeof rev.attachment === 'object' && rev.attachment && rev.attachment.url) {
+              attachmentUrl = rev.attachment.url;
+              isPdf = rev.attachment.type === 'pdf' || attachmentUrl.toLowerCase().endsWith('.pdf');
+            }
+            const hasAttachment = Boolean(attachmentUrl);
+            const isImg = hasAttachment && !isPdf;
+
+            return (
+              <div
+                key={rev.id}
+                onClick={() => setSelectedReview(rev)}
+                className="group bg-white rounded-2xl p-6 sm:p-7 border border-[#ea0011]/15 shadow-md hover:shadow-2xl hover:border-[#ea0011]/40 transition-all duration-300 cursor-pointer flex flex-col justify-between text-right relative overflow-hidden w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-[400px]"
+              >
+                {/* Top bar: Stars & Subject */}
+                <div className="flex items-center justify-between gap-2 mb-4">
+                  {hasRating ? (
                     <div className="flex items-center text-[#ea0011]">
-                      {Array.from({ length: rev.rating }).map((_, i) => (
+                      {Array.from({ length: rev.rating! }).map((_, i) => (
                         <Star key={i} className="w-4 h-4 fill-[#ea0011] text-[#ea0011]" />
                       ))}
                     </div>
-                  ) : <div />}
-                  {rev.subject && (
-                    <span className="text-[11px] font-bold text-[#ea0011] bg-[#fff5f5] px-2 py-0.5 rounded">
+                  ) : (
+                    <div />
+                  )}
+
+                  {hasSubject && (
+                    <span className="text-[11px] font-bold px-2.5 py-1 rounded-md border bg-[#fff5f5] text-[#ea0011] border-[#ea0011]/20">
                       {rev.subject}
                     </span>
                   )}
                 </div>
-                <p className="text-xs sm:text-sm text-[#2d4869] leading-relaxed line-clamp-3 font-serif">
-                  ״{rev.content}״
-                </p>
-                <span className="text-xs font-bold text-[#ea0011]">קראו עוד...</span>
-              </div>
 
-              <div className="flex items-center gap-3 pt-3 border-t border-gray-100">
-                {rev.avatarUrl ? (
-                  <img src={rev.avatarUrl} alt={rev.name} className="w-10 h-10 rounded-full object-cover" />
-                ) : (
-                  <div className="w-10 h-10 rounded-full bg-[#ea0011]/10 text-[#ea0011] font-bold flex items-center justify-center text-sm">
-                    {rev.name.slice(0, 1)}
+                {/* Content: 3-line clamp with Quote icon */}
+                <div className="space-y-2 flex-1">
+                  <Quote className="w-6 h-6 text-[#ea0011]/20 -mb-1" />
+                  <p className="text-sm sm:text-base text-[#112b4e] leading-relaxed font-serif line-clamp-3">
+                    ״{rev.content}״
+                  </p>
+                  <span className="text-xs font-bold text-[#ea0011] inline-block pt-1 group-hover:underline">
+                    קראו עוד...
+                  </span>
+                </div>
+
+                {/* Author Info Footer */}
+                {(rev.name?.trim() || rev.role?.trim() || rev.date?.trim() || rev.avatarUrl || hasAttachment) && (
+                  <div className="flex items-center justify-between gap-3.5 pt-4 mt-4 border-t border-gray-100">
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      {rev.avatarUrl ? (
+                        <img
+                          src={rev.avatarUrl}
+                          alt={rev.name || 'ממליץ'}
+                          className="w-11 h-11 rounded-full object-cover border border-[#ea0011]/20 shadow-xs shrink-0"
+                        />
+                      ) : rev.name && rev.name.trim() !== '' ? (
+                        <div className="w-11 h-11 rounded-full bg-[#ea0011]/10 text-[#ea0011] font-bold flex items-center justify-center text-sm shrink-0">
+                          {rev.name.slice(0, 1)}
+                        </div>
+                      ) : null}
+
+                      <div className="min-w-0">
+                        {rev.name && rev.name.trim() !== '' && (
+                          <div className="text-sm font-bold text-[#112b4e] truncate">
+                            {rev.name}
+                          </div>
+                        )}
+                        {(rev.role?.trim() || rev.date?.trim()) && (
+                          <div className={`text-xs text-[#577291] truncate ${!rev.name?.trim() ? 'font-bold text-[#112b4e]' : ''}`}>
+                            {rev.role && rev.role.trim() !== '' && hasDate
+                              ? `${rev.role} • ${rev.date}`
+                              : rev.role || rev.date}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Attachment Icon Indicator */}
+                    {isPdf && (
+                      <div
+                        className="flex items-center gap-1 text-[11px] font-bold text-[#ea0011] bg-[#ea0011]/10 px-2.5 py-1 rounded-lg border border-[#ea0011]/20 shrink-0"
+                        title="מצורף קובץ PDF מלא"
+                      >
+                        <FileText className="w-3.5 h-3.5" />
+                        <span>PDF</span>
+                      </div>
+                    )}
+                    {isImg && (
+                      <div
+                        className="flex items-center gap-1 text-[11px] font-bold text-[#18457c] bg-[#18457c]/10 px-2.5 py-1 rounded-lg border border-[#18457c]/20 shrink-0"
+                        title="מצורפת תמונת המלצה"
+                      >
+                        <ImageIcon className="w-3.5 h-3.5" />
+                        <span>תמונה</span>
+                      </div>
+                    )}
                   </div>
                 )}
-                <div>
-                  <div className="text-xs font-bold text-[#112b4e]">{rev.name}</div>
-                  <div className="text-[11px] text-[#577291]">{rev.role}</div>
-                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -288,22 +392,22 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
       <section className="max-w-[1280px] mx-auto px-4 md:px-8">
         <div className="rounded-3xl bg-[#ea0011] text-white p-8 md:p-12 shadow-2xl relative overflow-hidden text-right flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-3 max-w-xl z-10">
-            <h3 className="text-2xl sm:text-3xl font-extrabold">צריכים נאום או ברכה מנצחת?</h3>
-            <p className="text-sm sm:text-base text-white/90 leading-relaxed">
-              צרו קשר ישיר עם משה שטרן לכתיבת טקסט ייחודי שיהפוך את המעמד שלכם לבלתי נשכח.
+            <h3 className="text-2xl sm:text-3xl font-extrabold">יש לכם אירוע בפתח וצריכים נאום מרגש?</h3>
+            <p className="text-sm sm:text-base text-[#ffdad5] leading-relaxed">
+              צרו קשר עם משה שטרן לשיחת התייעצות קצרה שבה נתחיל להפוך את המחשבות שלכם למילים.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-4 z-10">
             <button
               onClick={() => onNavigate('contact')}
-              className="bg-[#18457c] hover:bg-[#112b4e] text-white px-7 py-3.5 rounded-xl font-bold text-sm sm:text-base shadow-lg transition-all cursor-pointer"
+              className="bg-[#112b4e] hover:bg-[#0c1f36] text-white px-7 py-3.5 rounded-xl font-bold text-sm sm:text-base shadow-lg transition-all cursor-pointer"
             >
-              פרטי קשר ושיחה מהירה
+              שיחת התייעצות ופרטי קשר
             </button>
             <button
               onClick={() => onNavigate('hosting-home')}
-              className="bg-white/15 hover:bg-white/25 text-white border border-white/20 px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all cursor-pointer"
+              className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all cursor-pointer"
             >
               מעבר להנחיית טקסים
             </button>
@@ -315,6 +419,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
       <ReviewModal
         review={selectedReview}
         onClose={() => setSelectedReview(null)}
+        type="speeches"
       />
 
     </div>

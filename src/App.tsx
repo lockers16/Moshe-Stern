@@ -11,7 +11,7 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { MessageCircle } from 'lucide-react';
 import siteConfig from './data/siteConfig.json';
-import { tabToUrlMap, getInitialTabFromLocation, urlToTabMap } from './navigation';
+import { tabToUrlMap, getInitialTabFromLocation } from './navigation';
 
 interface AppProps {
   initialTab?: string;
@@ -21,6 +21,7 @@ export function App({ initialTab }: AppProps) {
   const [activeTab, setActiveTab] = useState<string>(() => {
     return initialTab || getInitialTabFromLocation();
   });
+  const [initialGalleryEventId, setInitialGalleryEventId] = useState<string | null>(null);
 
   useEffect(() => {
     // Ensure the initial history entry has the current tab state
@@ -31,9 +32,11 @@ export function App({ initialTab }: AppProps) {
     const handlePopState = (event: PopStateEvent) => {
       if (event.state && typeof event.state.tab === 'string') {
         setActiveTab(event.state.tab);
+        setInitialGalleryEventId(null);
       } else {
         const tab = getInitialTabFromLocation();
         setActiveTab(tab);
+        setInitialGalleryEventId(null);
       }
     };
 
@@ -41,7 +44,13 @@ export function App({ initialTab }: AppProps) {
     return () => window.removeEventListener('popstate', handlePopState);
   }, [activeTab]);
 
-  const handleNavigate = (tabId: string) => {
+  const handleNavigate = (tabId: string, eventId?: string) => {
+    if (eventId) {
+      setInitialGalleryEventId(eventId);
+    } else {
+      setInitialGalleryEventId(null);
+    }
+
     setActiveTab(tabId);
     const targetUrl = tabToUrlMap[tabId] || '/';
     
@@ -50,7 +59,7 @@ export function App({ initialTab }: AppProps) {
       window.history.pushState({ tab: tabId }, '', targetUrl);
     }
     
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   return (
@@ -59,7 +68,7 @@ export function App({ initialTab }: AppProps) {
       {/* Top Header Navbar */}
       <Header
         activeTab={activeTab}
-        setActiveTab={handleNavigate}
+        setActiveTab={(tab) => handleNavigate(tab)}
       />
 
       {/* Main Content Area based on activeTab */}
@@ -67,7 +76,7 @@ export function App({ initialTab }: AppProps) {
         {/* 1. Main Portal Home (Hero + About) */}
         {activeTab === 'home' && (
           <div className="space-y-0">
-            <Hero onNavigate={handleNavigate} />
+            <Hero onNavigate={(tab) => handleNavigate(tab)} />
             <AboutSection onNavigateToContact={() => handleNavigate('contact')} />
           </div>
         )}
@@ -84,7 +93,7 @@ export function App({ initialTab }: AppProps) {
 
         {/* 4. Hosting Section: Full Photo Gallery */}
         {(activeTab === 'hosting-gallery' || activeTab === 'gallery') && (
-          <PhotoGallery />
+          <PhotoGallery initialEventId={initialGalleryEventId} />
         )}
 
         {/* 5. Hosting Section: Reviews & Testimonials */}
@@ -94,7 +103,7 @@ export function App({ initialTab }: AppProps) {
 
         {/* 6. Speeches Section: Home (with 3 speeches taste items) */}
         {activeTab === 'speeches-home' && (
-          <SpeechesHome onNavigate={handleNavigate} />
+          <SpeechesHome onNavigate={(tab) => handleNavigate(tab)} />
         )}
 
         {/* 7. Speeches Section: Full Speeches List */}
@@ -133,7 +142,7 @@ export function App({ initialTab }: AppProps) {
       </div>
 
       {/* Footer */}
-      <Footer onNavigate={handleNavigate} />
+      <Footer onNavigate={(tab) => handleNavigate(tab)} />
 
     </div>
   );

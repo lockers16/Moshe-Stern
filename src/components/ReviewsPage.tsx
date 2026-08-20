@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star, MessageSquare, Quote } from 'lucide-react';
+import { Star, MessageSquare, Quote, FileText, Image as ImageIcon } from 'lucide-react';
 import reviewsHostingData from '../data/reviewsHosting.json';
 import reviewsSpeechesData from '../data/reviewsSpeeches.json';
 import { ReviewItem } from '../types';
@@ -21,10 +21,10 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({ type = 'all' }) => {
 
   const pageTitle =
     type === 'hosting'
-      ? 'תגובות וביקורות – הנחיית טקסים'
+      ? 'המלצות וביקורות – הנחיית טקסים'
       : type === 'speeches'
-      ? 'תגובות וביקורות – כתיבת נאומים'
-      : 'תגובות וביקורות';
+      ? 'המלצות וביקורות – כתיבת נאומים'
+      : 'המלצות וביקורות';
 
   const pageSubtitle =
     type === 'hosting'
@@ -32,8 +32,6 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({ type = 'all' }) => {
       : type === 'speeches'
       ? 'המלצות וביקורות של נואמים, בעלי שמחה וארגונים שנכתבו עבורם נאומים וטקסטים אישיים'
       : 'המלצות וביקורות של לקוחות ושותפים שעבדו עם משה שטרן';
-
-  const accentColor = type === 'speeches' ? '#ea0011' : '#18457c';
 
   return (
     <section className="py-12 md:py-16 bg-[#f5f8fc] relative overflow-hidden" id="reviews-page">
@@ -53,7 +51,7 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({ type = 'all' }) => {
             {pageTitle}
           </h1>
           <p className="text-base md:text-lg text-[#2d4869] leading-relaxed">
-            {pageSubtitle}. לחצו על כל ביקורת לפתיחת התוכן המלא.
+            {pageSubtitle}. לחצו על כל המלצה לפתיחת התוכן המלא.
           </p>
         </div>
 
@@ -63,6 +61,18 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({ type = 'all' }) => {
             const hasRating = typeof review.rating === 'number' && review.rating > 0;
             const hasSubject = review.subject && review.subject.trim() !== '';
             const hasDate = review.date && review.date.trim() !== '';
+            
+            let attachmentUrl = '';
+            let isPdf = false;
+            if (typeof review.attachment === 'string' && review.attachment.trim() !== '') {
+              attachmentUrl = review.attachment.trim();
+              isPdf = attachmentUrl.toLowerCase().endsWith('.pdf');
+            } else if (typeof review.attachment === 'object' && review.attachment && review.attachment.url) {
+              attachmentUrl = review.attachment.url;
+              isPdf = review.attachment.type === 'pdf' || attachmentUrl.toLowerCase().endsWith('.pdf');
+            }
+            const hasAttachment = Boolean(attachmentUrl);
+            const isImg = hasAttachment && !isPdf;
 
             return (
               <div
@@ -107,29 +117,58 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({ type = 'all' }) => {
                 </div>
 
                 {/* Author Info Footer */}
-                <div className="flex items-center gap-3.5 pt-4 mt-4 border-t border-[#18457c]/10">
-                  {review.avatarUrl ? (
-                    <img
-                      src={review.avatarUrl}
-                      alt={review.name}
-                      className="w-11 h-11 rounded-full object-cover border border-[#18457c]/20 shadow-xs shrink-0"
-                    />
-                  ) : (
-                    <div className="w-11 h-11 rounded-full bg-[#18457c]/10 text-[#18457c] font-bold flex items-center justify-center text-sm shrink-0">
-                      {review.name.slice(0, 1)}
-                    </div>
-                  )}
+                {(review.name?.trim() || review.role?.trim() || review.date?.trim() || review.avatarUrl || hasAttachment) && (
+                  <div className="flex items-center justify-between gap-3.5 pt-4 mt-4 border-t border-[#18457c]/10">
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      {review.avatarUrl ? (
+                        <img
+                          src={review.avatarUrl}
+                          alt={review.name || 'ממליץ'}
+                          className="w-11 h-11 rounded-full object-cover border border-[#18457c]/20 shadow-xs shrink-0"
+                        />
+                      ) : review.name && review.name.trim() !== '' ? (
+                        <div className="w-11 h-11 rounded-full bg-[#18457c]/10 text-[#18457c] font-bold flex items-center justify-center text-sm shrink-0">
+                          {review.name.slice(0, 1)}
+                        </div>
+                      ) : null}
 
-                  <div>
-                    <div className="text-sm font-bold text-[#112b4e]">
-                      {review.name}
+                      <div className="min-w-0">
+                        {review.name && review.name.trim() !== '' && (
+                          <div className="text-sm font-bold text-[#112b4e] truncate">
+                            {review.name}
+                          </div>
+                        )}
+                        {(review.role?.trim() || review.date?.trim()) && (
+                          <div className={`text-xs text-[#577291] truncate ${!review.name?.trim() ? 'font-bold text-[#112b4e]' : ''}`}>
+                            {review.role && review.role.trim() !== '' && hasDate
+                              ? `${review.role} • ${review.date}`
+                              : review.role || review.date}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    <div className="text-xs text-[#577291]">
-                      {review.role}
-                      {hasDate && ` • ${review.date}`}
-                    </div>
+
+                    {/* Attachment Icon Indicator */}
+                    {isPdf && (
+                      <div
+                        className="flex items-center gap-1 text-[11px] font-bold text-[#ea0011] bg-[#ea0011]/10 px-2.5 py-1 rounded-lg border border-[#ea0011]/20 shrink-0"
+                        title="מצורף קובץ PDF מלא"
+                      >
+                        <FileText className="w-3.5 h-3.5" />
+                        <span>PDF</span>
+                      </div>
+                    )}
+                    {isImg && (
+                      <div
+                        className="flex items-center gap-1 text-[11px] font-bold text-[#18457c] bg-[#18457c]/10 px-2.5 py-1 rounded-lg border border-[#18457c]/20 shrink-0"
+                        title="מצורפת תמונת המלצה"
+                      >
+                        <ImageIcon className="w-3.5 h-3.5" />
+                        <span>תמונה</span>
+                      </div>
+                    )}
                   </div>
-                </div>
+                )}
 
               </div>
             );
@@ -142,8 +181,8 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({ type = 'all' }) => {
       <ReviewModal
         review={selectedReview}
         onClose={() => setSelectedReview(null)}
+        type={type}
       />
     </section>
   );
 };
-

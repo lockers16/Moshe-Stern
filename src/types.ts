@@ -78,6 +78,11 @@ export interface ReviewItem {
   rating?: number;
   avatarUrl?: string;
   subject?: string;
+  attachment?: string | {
+    type?: 'pdf' | 'image';
+    url: string;
+    title?: string;
+  };
 }
 
 export interface ContactMessageData {

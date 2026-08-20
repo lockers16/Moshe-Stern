@@ -1,0 +1,23 @@
+{
+  "_comment": "קובץ בחירת הפריטים הנבחרים שיוצגו בטעימה (מיני-גלריה וטעימות דוגמאות/המלצות) בדפי הבית. ניתן להחליף את ה-id לפי הרצוי: right = ימני, center = אמצעי, left = שמאלי",
+  "hostingGallery": {
+    "right": "remembrance-tribute-evening",
+    "center": "memorial-day-ceremony",
+    "left": "distinguished-citizens-award"
+  },
+  "hostingReviews": {
+    "right": "rev-host-1",
+    "center": "rev-host-2",
+    "left": "rev-host-3"
+  },
+  "speechesExamples": {
+    "right": "speech-wedding-vows",
+    "center": "speech-barmitzvah-parent",
+    "left": "speech-batmitzvah-girl"
+  },
+  "speechesReviews": {
+    "right": "rev-speech-1",
+    "center": "rev-speech-2",
+    "left": "rev-speech-3"
+  }
+}

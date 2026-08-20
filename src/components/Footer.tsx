@@ -81,7 +81,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   </li>
                   <li>
                     <button onClick={() => onNavigate('hosting-reviews')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
-                      • ביקורות להנחיות
+                      • המלצות וביקורות
                     </button>
                   </li>
                 </ul>
@@ -102,7 +102,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   </li>
                   <li>
                     <button onClick={() => onNavigate('speeches-reviews')} className="hover:text-[#ea0011] transition-colors cursor-pointer">
-                      • ביקורות לנאומים
+                      • המלצות וביקורות
                     </button>
                   </li>
                 </ul>

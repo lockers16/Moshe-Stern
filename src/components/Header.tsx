@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sparkles, MessageSquareQuote, Mail, Mic2, BookOpen, ChevronLeft, ArrowLeft } from 'lucide-react';
+import { Menu, X, MessageSquareQuote, Mail, Mic2, BookOpen, ArrowLeft } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { Logo } from './Logo';
 
 interface HeaderProps {
@@ -22,15 +23,17 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   const isSpeechesSection = activeTab.startsWith('speeches');
   const isHostingSection = activeTab.startsWith('hosting') || activeTab === 'gallery';
 
+  const sectionKey = isSpeechesSection ? 'speeches' : isHostingSection ? 'hosting' : 'portal';
+
   // Section-based theme styling:
   // 1. Speeches: Classic Red (#ea0011) with Dark Navy buttons/accents
-  // 2. Hosting: Current Rich Blue (#18457c) with Red buttons/accents
-  // 3. Main Portal: Lighter Blue (#1e5ea8) with Red buttons/accents
+  // 2. Hosting: Rich Blue (#18457c) with Red buttons/accents
+  // 3. Main Portal: Vibrant Blue (#1e5ea8) with Red buttons/accents
   const headerBgClass = isSpeechesSection
     ? 'bg-[#ea0011] border-b border-[#c9000e]'
     : isHostingSection
     ? 'bg-[#18457c] border-b border-[#143c6d]'
-    : 'bg-[#1e5ea8] border-b border-[#1b5496]'; // Lighter vibrant blue for main portal
+    : 'bg-[#1e5ea8] border-b border-[#1b5496]';
 
   const contactButtonClass = isSpeechesSection
     ? activeTab === 'contact'
@@ -86,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             דף הבית
           </button>
 
-          {/* 2. אודות משה (Moved to right, next to home) */}
+          {/* 2. אודות משה */}
           <button
             onClick={() => handleNavClick('about')}
             className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
@@ -98,132 +101,153 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             אודות משה
           </button>
 
-          {/* ================= IF IN HOSTING SECTION ================= */}
-          {isHostingSection && (
-            <>
-              {/* Distinctive Section Button / Rectangle (הנחיית טקסים) */}
-              <button
-                onClick={() => handleNavClick('hosting-home')}
-                className={`px-3.5 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 border shadow-sm ${
-                  activeTab === 'hosting-home'
-                    ? 'bg-[#ea0011] text-white border-white/30 shadow-md scale-105'
-                    : 'bg-white/15 text-white hover:bg-white/25 border-white/20'
-                }`}
+          {/* Animated Section Content - Subtle & smooth */}
+          <AnimatePresence mode="wait">
+            {isHostingSection && (
+              <motion.div
+                key="hosting-nav"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
+                className="flex items-center gap-1 xl:gap-1.5"
               >
-                <Mic2 className="w-3.5 h-3.5" />
-                <span>הנחיית טקסים ואירועים</span>
-              </button>
+                {/* Distinctive Section Button (הנחיית טקסים) */}
+                <button
+                  onClick={() => handleNavClick('hosting-home')}
+                  className={`px-3.5 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 border shadow-sm ${
+                    activeTab === 'hosting-home'
+                      ? 'bg-[#ea0011] text-white border-white/30 shadow-md'
+                      : 'bg-white/15 text-white hover:bg-white/25 border-white/20'
+                  }`}
+                >
+                  <Mic2 className="w-3.5 h-3.5" />
+                  <span>הנחיית טקסים ואירועים</span>
+                </button>
 
-              {/* גלריית אירועים */}
-              <button
-                onClick={() => handleNavClick('hosting-gallery')}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                  activeTab === 'hosting-gallery'
-                    ? 'bg-white/20 text-white font-bold shadow-xs underline decoration-[#ea0011] decoration-2 underline-offset-4'
-                    : 'text-white/90 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                גלריית אירועים
-              </button>
+                {/* גלריית אירועים */}
+                <button
+                  onClick={() => handleNavClick('hosting-gallery')}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    activeTab === 'hosting-gallery'
+                      ? 'bg-white/20 text-white font-bold shadow-xs underline decoration-white decoration-2 underline-offset-4'
+                      : 'text-white/90 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  גלריית אירועים
+                </button>
 
-              {/* תגובות וביקורות להנחיות */}
-              <button
-                onClick={() => handleNavClick('hosting-reviews')}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1 ${
-                  activeTab === 'hosting-reviews'
-                    ? 'bg-white/20 text-white font-bold shadow-xs underline decoration-[#ea0011] decoration-2 underline-offset-4'
-                    : 'text-white/90 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <MessageSquareQuote className="w-3.5 h-3.5 text-[#ffdad5]" />
-                <span>תגובות וביקורות</span>
-              </button>
+                {/* המלצות וביקורות להנחיות */}
+                <button
+                  onClick={() => handleNavClick('hosting-reviews')}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1 ${
+                    activeTab === 'hosting-reviews'
+                      ? 'bg-white/20 text-white font-bold shadow-xs underline decoration-white decoration-2 underline-offset-4'
+                      : 'text-white/90 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <MessageSquareQuote className="w-3.5 h-3.5 text-[#ffdad5]" />
+                  <span>המלצות וביקורות</span>
+                </button>
 
-              {/* Switch link to Speeches */}
-              <button
-                onClick={() => handleNavClick('speeches-home')}
-                className="text-xs text-white/80 hover:text-white hover:bg-white/10 px-2.5 py-1 rounded-md transition-all cursor-pointer mr-1"
-                title="מעבר לאזור כתיבת נאומים"
-              >
-                לכתיבת נאומים ←
-              </button>
-            </>
-          )}
+                {/* Switch link to Speeches */}
+                <button
+                  onClick={() => handleNavClick('speeches-home')}
+                  className="text-xs text-white/80 hover:text-white hover:bg-white/10 px-2.5 py-1 rounded-md transition-all cursor-pointer mr-1"
+                  title="מעבר לאזור כתיבת נאומים"
+                >
+                  לכתיבת נאומים ←
+                </button>
+              </motion.div>
+            )}
 
-          {/* ================= IF IN SPEECHES SECTION ================= */}
-          {isSpeechesSection && (
-            <>
-              {/* Distinctive Section Button / Rectangle (כתיבת נאומים) */}
-              <button
-                onClick={() => handleNavClick('speeches-home')}
-                className={`px-3.5 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 border shadow-sm ${
-                  activeTab === 'speeches-home'
-                    ? 'bg-[#112b4e] text-white border-white/30 shadow-md scale-105'
-                    : 'bg-white/15 text-white hover:bg-white/25 border-white/20'
-                }`}
+            {isSpeechesSection && (
+              <motion.div
+                key="speeches-nav"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
+                className="flex items-center gap-1 xl:gap-1.5"
               >
-                <BookOpen className="w-3.5 h-3.5" />
-                <span>כתיבת נאומים</span>
-              </button>
+                {/* Distinctive Section Button (כתיבת נאומים) */}
+                <button
+                  onClick={() => handleNavClick('speeches-home')}
+                  className={`px-3.5 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 border shadow-sm ${
+                    activeTab === 'speeches-home'
+                      ? 'bg-[#112b4e] text-white border-white/30 shadow-md'
+                      : 'bg-white/15 text-white hover:bg-white/25 border-white/20'
+                  }`}
+                >
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>כתיבת נאומים</span>
+                </button>
 
-              {/* דוגמאות לנאומים */}
-              <button
-                onClick={() => handleNavClick('speeches-full')}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                  activeTab === 'speeches-full'
-                    ? 'bg-white/20 text-white font-bold shadow-xs underline decoration-white decoration-2 underline-offset-4'
-                    : 'text-white/90 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                דוגמאות לנאומים
-              </button>
+                {/* דוגמאות לנאומים */}
+                <button
+                  onClick={() => handleNavClick('speeches-full')}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    activeTab === 'speeches-full'
+                      ? 'bg-white/20 text-white font-bold shadow-xs underline decoration-white decoration-2 underline-offset-4'
+                      : 'text-white/90 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  דוגמאות לנאומים
+                </button>
 
-              {/* תגובות וביקורות לנאומים */}
-              <button
-                onClick={() => handleNavClick('speeches-reviews')}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1 ${
-                  activeTab === 'speeches-reviews'
-                    ? 'bg-white/20 text-white font-bold shadow-xs underline decoration-white decoration-2 underline-offset-4'
-                    : 'text-white/90 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <MessageSquareQuote className="w-3.5 h-3.5 text-white/90" />
-                <span>תגובות וביקורות</span>
-              </button>
+                {/* המלצות וביקורות לנאומים */}
+                <button
+                  onClick={() => handleNavClick('speeches-reviews')}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1 ${
+                    activeTab === 'speeches-reviews'
+                      ? 'bg-white/20 text-white font-bold shadow-xs underline decoration-white decoration-2 underline-offset-4'
+                      : 'text-white/90 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <MessageSquareQuote className="w-3.5 h-3.5 text-white/90" />
+                  <span>המלצות וביקורות</span>
+                </button>
 
-              {/* Switch link to Hosting */}
-              <button
-                onClick={() => handleNavClick('hosting-home')}
-                className="text-xs text-white/80 hover:text-white hover:bg-white/10 px-2.5 py-1 rounded-md transition-all cursor-pointer mr-1"
-                title="מעבר לאזור הנחיית טקסים"
-              >
-                להנחיית טקסים ←
-              </button>
-            </>
-          )}
+                {/* Switch link to Hosting */}
+                <button
+                  onClick={() => handleNavClick('hosting-home')}
+                  className="text-xs text-white/80 hover:text-white hover:bg-white/10 px-2.5 py-1 rounded-md transition-all cursor-pointer mr-1"
+                  title="מעבר לאזור הנחיית טקסים"
+                >
+                  להנחיית טקסים ←
+                </button>
+              </motion.div>
+            )}
 
-          {/* ================= IF IN MAIN PORTAL ================= */}
-          {!isHostingSection && !isSpeechesSection && (
-            <>
-              {/* Button: הנחיית טקסים */}
-              <button
-                onClick={() => handleNavClick('hosting-home')}
-                className="px-3.5 py-1.5 rounded-lg font-bold bg-[#18457c] hover:bg-[#123662] text-white transition-all cursor-pointer flex items-center gap-1.5 shadow-sm border border-white/20 hover:scale-105"
+            {!isHostingSection && !isSpeechesSection && (
+              <motion.div
+                key="portal-nav"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
+                className="flex items-center gap-1 xl:gap-1.5"
               >
-                <Mic2 className="w-3.5 h-3.5 text-[#ea0011]" />
-                <span>הנחיית טקסים ואירועים</span>
-              </button>
+                {/* Button: הנחיית טקסים */}
+                <button
+                  onClick={() => handleNavClick('hosting-home')}
+                  className="px-3.5 py-1.5 rounded-lg font-bold bg-[#18457c] hover:bg-[#123662] text-white transition-all cursor-pointer flex items-center gap-1.5 shadow-sm border border-white/20 hover:scale-105"
+                >
+                  <Mic2 className="w-3.5 h-3.5 text-[#ea0011]" />
+                  <span>הנחיית טקסים ואירועים</span>
+                </button>
 
-              {/* Button: כתיבת נאומים */}
-              <button
-                onClick={() => handleNavClick('speeches-home')}
-                className="px-3.5 py-1.5 rounded-lg font-bold bg-[#ea0011] hover:bg-[#c9000e] text-white transition-all cursor-pointer flex items-center gap-1.5 shadow-sm border border-white/20 hover:scale-105"
-              >
-                <BookOpen className="w-3.5 h-3.5 text-white" />
-                <span>כתיבת נאומים</span>
-              </button>
-            </>
-          )}
+                {/* Button: כתיבת נאומים */}
+                <button
+                  onClick={() => handleNavClick('speeches-home')}
+                  className="px-3.5 py-1.5 rounded-lg font-bold bg-[#ea0011] hover:bg-[#c9000e] text-white transition-all cursor-pointer flex items-center gap-1.5 shadow-sm border border-white/20 hover:scale-105"
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-white" />
+                  <span>כתיבת נאומים</span>
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
         </nav>
 
@@ -235,7 +259,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${contactButtonClass}`}
           >
             <Mail className="w-4 h-4" />
-            <span>פרטי קשר</span>
+            <span>יצירת קשר</span>
           </button>
 
           {/* Mobile Menu Toggle */}
@@ -292,7 +316,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   activeTab === 'hosting-gallery' ? 'bg-white/25 text-white font-bold' : 'text-white/90 hover:bg-white/10'
                 }`}
               >
-                <span>גלריית אירועים מלאה</span>
+                <span>גלריית אירועים</span>
                 <ArrowLeft className="w-3.5 h-3.5" />
               </button>
               <button
@@ -301,7 +325,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   activeTab === 'hosting-reviews' ? 'bg-white/25 text-white font-bold' : 'text-white/90 hover:bg-white/10'
                 }`}
               >
-                <span>ביקורות והמלצות להנחיות</span>
+                <span>המלצות וביקורות להנחיות</span>
                 <MessageSquareQuote className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -326,7 +350,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   activeTab === 'speeches-full' ? 'bg-white/25 text-white font-bold' : 'text-white/90 hover:bg-white/10'
                 }`}
               >
-                <span>דוגמאות לנאומים מלאים</span>
+                <span>דוגמאות לנאומים</span>
                 <ArrowLeft className="w-3.5 h-3.5" />
               </button>
               <button
@@ -335,7 +359,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   activeTab === 'speeches-reviews' ? 'bg-white/25 text-white font-bold' : 'text-white/90 hover:bg-white/10'
                 }`}
               >
-                <span>ביקורות והמלצות לנאומים</span>
+                <span>המלצות וביקורות לנאומים</span>
                 <MessageSquareQuote className="w-3.5 h-3.5" />
               </button>
             </div>

@@ -34,7 +34,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onNavigateToContact 
               </div>
             </div>
 
-            <div className="absolute -bottom-4 -left-4 bg-white p-3.5 rounded-xl shadow-lg border border-[#18457c]/15 text-xs font-bold text-[#112b4e] flex items-center gap-2">
+            <div className="mt-3 sm:mt-0 sm:absolute sm:-bottom-4 sm:-left-4 bg-white p-3.5 rounded-xl shadow-lg border border-[#18457c]/15 text-xs font-bold text-[#112b4e] flex items-center gap-2">
               <Award className="w-5 h-5 text-[#ea0011]" />
               <span>מעל עשור של כתיבה והנחיית טקסים</span>
             </div>

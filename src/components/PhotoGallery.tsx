@@ -3,11 +3,26 @@ import { ChevronLeft, ChevronRight, X, MapPin, Calendar, Sparkles, Images, ZoomI
 import galleryData from '../data/gallery.json';
 import { GalleryEventItem } from '../types';
 
-export const PhotoGallery: React.FC = () => {
+interface PhotoGalleryProps {
+  initialEventId?: string | null;
+}
+
+export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ initialEventId }) => {
   const events: GalleryEventItem[] = galleryData;
   const [selectedCategory, setSelectedCategory] = useState<string>('הכל');
   const [selectedEvent, setSelectedEvent] = useState<GalleryEventItem | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Automatically open initial event if passed
+  useEffect(() => {
+    if (initialEventId) {
+      const found = events.find(e => e.id === initialEventId);
+      if (found) {
+        setSelectedEvent(found);
+        setCurrentImageIndex(0);
+      }
+    }
+  }, [initialEventId, events]);
 
   // Extract all distinct categories from JSON + default preset categories
   const categoriesList = useMemo(() => {

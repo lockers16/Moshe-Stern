@@ -1,22 +1,99 @@
-import React, { useState } from 'react';
-import { Sparkles, Images, MessageSquare, ArrowLeft, Calendar, MapPin, CheckCircle2, ShieldCheck, HeartHandshake, Mic2, Star, Quote } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Sparkles, Images, MessageSquare, ArrowLeft, Calendar, MapPin, ShieldCheck, HeartHandshake, Mic2, Star, Quote, FileText, Image as ImageIcon, X, ChevronRight, ChevronLeft } from 'lucide-react';
 import galleryData from '../data/gallery.json';
 import reviewsHostingData from '../data/reviewsHosting.json';
+import featuredItems from '../data/featuredItems.json';
 import { GalleryEventItem, ReviewItem } from '../types';
 import { ReviewModal } from './ReviewModal';
 
 interface HostingHomeProps {
-  onNavigate: (tabId: string) => void;
+  onNavigate: (tabId: string, eventId?: string) => void;
 }
 
 export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
   const events: GalleryEventItem[] = galleryData;
-  // Exactly 3 items for the gallery taste
-  const previewEvents = events.slice(0, 3);
-
   const reviews: ReviewItem[] = reviewsHostingData;
-  const previewReviews = reviews.slice(0, 3);
   const [selectedReview, setSelectedReview] = useState<ReviewItem | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<GalleryEventItem | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+
+  const openEventModal = (item: GalleryEventItem) => {
+    setSelectedEvent(item);
+    setCurrentImageIndex(0);
+  };
+
+  const closeEventModal = () => {
+    setSelectedEvent(null);
+    setCurrentImageIndex(0);
+  };
+
+  const handleNextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!selectedEvent || selectedEvent.images.length <= 1) return;
+    setCurrentImageIndex((prev) => (prev + 1) % selectedEvent.images.length);
+  };
+
+  const handlePrevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!selectedEvent || selectedEvent.images.length <= 1) return;
+    setCurrentImageIndex((prev) => (prev - 1 + selectedEvent.images.length) % selectedEvent.images.length);
+  };
+
+  // Load items according to featuredItems.hostingGallery in order: [right, center, left]
+  // If invalid or duplicates or missing, gracefully complete from available events (unique)
+  const previewEvents = useMemo(() => {
+    const { right, center, left } = featuredItems.hostingGallery || {};
+    const requestedIds = [right, center, left].filter(Boolean);
+    const map = new Map(events.map((e) => [e.id, e]));
+    const list: GalleryEventItem[] = [];
+
+    // Add valid and unique requested IDs in order
+    requestedIds.forEach((id) => {
+      const item = map.get(id);
+      if (item && !list.some((existing) => existing.id === item.id)) {
+        list.push(item);
+      }
+    });
+
+    // Fill up to 3 items with remaining unselected events from the start of events list
+    if (list.length < 3) {
+      for (const e of events) {
+        if (!list.some((existing) => existing.id === e.id)) {
+          list.push(e);
+          if (list.length === 3) break;
+        }
+      }
+    }
+
+    return list;
+  }, [events]);
+
+  // Load reviews according to featuredItems.hostingReviews in order: [right, center, left]
+  const previewReviews = useMemo(() => {
+    const { right, center, left } = featuredItems.hostingReviews || {};
+    const requestedIds = [right, center, left].filter(Boolean);
+    const map = new Map(reviews.map((r) => [r.id, r]));
+    const list: ReviewItem[] = [];
+
+    requestedIds.forEach((id) => {
+      const item = map.get(id);
+      if (item && !list.some((existing) => existing.id === item.id)) {
+        list.push(item);
+      }
+    });
+
+    // Fill up to 3 reviews with remaining unselected reviews
+    if (list.length < 3) {
+      for (const r of reviews) {
+        if (!list.some((existing) => existing.id === r.id)) {
+          list.push(r);
+          if (list.length === 3) break;
+        }
+      }
+    }
+
+    return list;
+  }, [reviews]);
 
   return (
     <div className="bg-[#f5f8fc] space-y-16 pb-20">
@@ -61,12 +138,12 @@ export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
                   className="bg-white hover:bg-[#f1f5fa] text-[#18457c] border-2 border-[#18457c]/25 hover:border-[#18457c] px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-sm"
                 >
                   <MessageSquare className="w-5 h-5 text-[#ea0011]" />
-                  <span>תגובות וביקורות להנחיות</span>
+                  <span>המלצות וביקורות להנחיות</span>
                 </button>
               </div>
             </div>
 
-            {/* Left: Featured Visual Showcase */}
+            {/* Left: Featured Visual Showcase (Preserving User's chosen image) */}
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-[#18457c]/20 bg-[#18457c] aspect-[4/3] group">
                 <img
@@ -88,7 +165,7 @@ export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
       </section>
 
 
-      {/* 2. Gallery Taste (טעימה מהגלריה - בדיוק 3 פריטים) */}
+      {/* 2. Gallery Taste (טעימה מהגלריה - 3 פריטים מותאמים אישית) */}
       <section className="max-w-[1280px] mx-auto px-4 md:px-8 space-y-8 text-right">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2">
@@ -113,8 +190,8 @@ export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
           </button>
         </div>
 
-        {/* 3 Preview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* 3 Preview Cards (centered flex/grid) */}
+        <div className="flex flex-wrap justify-center gap-6">
           {previewEvents.map((item) => {
             const coverImage = item.images?.[0] || 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=800&auto=format&fit=crop&q=80';
             const photoCount = item.images?.length || 1;
@@ -122,8 +199,8 @@ export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
             return (
               <div
                 key={item.id}
-                onClick={() => onNavigate('hosting-gallery')}
-                className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-[#18457c]/15 cursor-pointer flex flex-col justify-between"
+                onClick={() => openEventModal(item)}
+                className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-[#18457c]/15 cursor-pointer flex flex-col justify-between w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-[400px]"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#18457c]">
                   <img
@@ -238,54 +315,121 @@ export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
             onClick={() => onNavigate('hosting-reviews')}
             className="inline-flex items-center gap-2 text-sm font-bold text-[#18457c] hover:text-[#ea0011] transition-colors cursor-pointer bg-white px-4 py-2 rounded-xl border border-[#18457c]/20 shadow-xs self-start sm:self-auto"
           >
-            <span>לכל הביקורות וההמלצות</span>
+            <span>לכל ההמלצות והביקורות</span>
             <ArrowLeft className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {previewReviews.map((rev) => (
-            <div
-              key={rev.id}
-              onClick={() => setSelectedReview(rev)}
-              className="bg-white p-6 rounded-2xl border border-[#18457c]/15 shadow-md hover:shadow-xl transition-all cursor-pointer flex flex-col justify-between space-y-4"
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  {typeof rev.rating === 'number' && rev.rating > 0 ? (
+        <div className="flex flex-wrap justify-center gap-6">
+          {previewReviews.map((rev) => {
+            const hasRating = typeof rev.rating === 'number' && rev.rating > 0;
+            const hasSubject = rev.subject && rev.subject.trim() !== '';
+            const hasDate = rev.date && rev.date.trim() !== '';
+            
+            let attachmentUrl = '';
+            let isPdf = false;
+            if (typeof rev.attachment === 'string' && rev.attachment.trim() !== '') {
+              attachmentUrl = rev.attachment.trim();
+              isPdf = attachmentUrl.toLowerCase().endsWith('.pdf');
+            } else if (typeof rev.attachment === 'object' && rev.attachment && rev.attachment.url) {
+              attachmentUrl = rev.attachment.url;
+              isPdf = rev.attachment.type === 'pdf' || attachmentUrl.toLowerCase().endsWith('.pdf');
+            }
+            const hasAttachment = Boolean(attachmentUrl);
+            const isImg = hasAttachment && !isPdf;
+
+            return (
+              <div
+                key={rev.id}
+                onClick={() => setSelectedReview(rev)}
+                className="group bg-white rounded-2xl p-6 sm:p-7 border border-[#18457c]/15 shadow-md hover:shadow-2xl hover:border-[#18457c]/40 transition-all duration-300 cursor-pointer flex flex-col justify-between text-right relative overflow-hidden w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] max-w-[400px]"
+              >
+                {/* Top bar: Stars & Subject */}
+                <div className="flex items-center justify-between gap-2 mb-4">
+                  {hasRating ? (
                     <div className="flex items-center text-[#ea0011]">
-                      {Array.from({ length: rev.rating }).map((_, i) => (
+                      {Array.from({ length: rev.rating! }).map((_, i) => (
                         <Star key={i} className="w-4 h-4 fill-[#ea0011] text-[#ea0011]" />
                       ))}
                     </div>
-                  ) : <div />}
-                  {rev.subject && (
-                    <span className="text-[11px] font-bold text-[#18457c] bg-[#eef3f8] px-2 py-0.5 rounded">
+                  ) : (
+                    <div />
+                  )}
+
+                  {hasSubject && (
+                    <span className="text-[11px] font-bold px-2.5 py-1 rounded-md border bg-[#eef3f8] text-[#18457c] border-[#18457c]/10">
                       {rev.subject}
                     </span>
                   )}
                 </div>
-                <p className="text-xs sm:text-sm text-[#2d4869] leading-relaxed line-clamp-3 font-serif">
-                  ״{rev.content}״
-                </p>
-                <span className="text-xs font-bold text-[#ea0011]">קראו עוד...</span>
-              </div>
 
-              <div className="flex items-center gap-3 pt-3 border-t border-[#18457c]/10">
-                {rev.avatarUrl ? (
-                  <img src={rev.avatarUrl} alt={rev.name} className="w-10 h-10 rounded-full object-cover" />
-                ) : (
-                  <div className="w-10 h-10 rounded-full bg-[#18457c]/10 text-[#18457c] font-bold flex items-center justify-center text-sm">
-                    {rev.name.slice(0, 1)}
+                {/* Content: 3-line clamp with Quote icon */}
+                <div className="space-y-2 flex-1">
+                  <Quote className="w-6 h-6 text-[#18457c]/20 -mb-1" />
+                  <p className="text-sm sm:text-base text-[#112b4e] leading-relaxed font-serif line-clamp-3">
+                    ״{rev.content}״
+                  </p>
+                  <span className="text-xs font-bold text-[#ea0011] inline-block pt-1 group-hover:underline">
+                    קראו עוד...
+                  </span>
+                </div>
+
+                {/* Author Info Footer */}
+                {(rev.name?.trim() || rev.role?.trim() || rev.date?.trim() || rev.avatarUrl || hasAttachment) && (
+                  <div className="flex items-center justify-between gap-3.5 pt-4 mt-4 border-t border-[#18457c]/10">
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      {rev.avatarUrl ? (
+                        <img
+                          src={rev.avatarUrl}
+                          alt={rev.name || 'ממליץ'}
+                          className="w-11 h-11 rounded-full object-cover border border-[#18457c]/20 shadow-xs shrink-0"
+                        />
+                      ) : rev.name && rev.name.trim() !== '' ? (
+                        <div className="w-11 h-11 rounded-full bg-[#18457c]/10 text-[#18457c] font-bold flex items-center justify-center text-sm shrink-0">
+                          {rev.name.slice(0, 1)}
+                        </div>
+                      ) : null}
+
+                      <div className="min-w-0">
+                        {rev.name && rev.name.trim() !== '' && (
+                          <div className="text-sm font-bold text-[#112b4e] truncate">
+                            {rev.name}
+                          </div>
+                        )}
+                        {(rev.role?.trim() || rev.date?.trim()) && (
+                          <div className={`text-xs text-[#577291] truncate ${!rev.name?.trim() ? 'font-bold text-[#112b4e]' : ''}`}>
+                            {rev.role && rev.role.trim() !== '' && hasDate
+                              ? `${rev.role} • ${rev.date}`
+                              : rev.role || rev.date}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Attachment Icon Indicator */}
+                    {isPdf && (
+                      <div
+                        className="flex items-center gap-1 text-[11px] font-bold text-[#ea0011] bg-[#ea0011]/10 px-2.5 py-1 rounded-lg border border-[#ea0011]/20 shrink-0"
+                        title="מצורף קובץ PDF מלא"
+                      >
+                        <FileText className="w-3.5 h-3.5" />
+                        <span>PDF</span>
+                      </div>
+                    )}
+                    {isImg && (
+                      <div
+                        className="flex items-center gap-1 text-[11px] font-bold text-[#18457c] bg-[#18457c]/10 px-2.5 py-1 rounded-lg border border-[#18457c]/20 shrink-0"
+                        title="מצורפת תמונת המלצה"
+                      >
+                        <ImageIcon className="w-3.5 h-3.5" />
+                        <span>תמונה</span>
+                      </div>
+                    )}
                   </div>
                 )}
-                <div>
-                  <div className="text-xs font-bold text-[#112b4e]">{rev.name}</div>
-                  <div className="text-[11px] text-[#577291]">{rev.role}</div>
-                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -321,7 +465,123 @@ export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
       <ReviewModal
         review={selectedReview}
         onClose={() => setSelectedReview(null)}
+        type="hosting"
       />
+
+      {/* Event Lightbox Modal (stays on the same page) */}
+      {selectedEvent && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#0c1f36]/90 backdrop-blur-md animate-in fade-in duration-200"
+          onClick={closeEventModal}
+        >
+          <div 
+            className="bg-white rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl border border-white/20 max-h-[95vh] flex flex-col relative text-right"
+            onClick={(e) => e.stopPropagation()}
+            dir="rtl"
+          >
+            
+            {/* Top Bar with Event Title & Location/Date on RIGHT and Close Button on LEFT */}
+            <div className="px-5 py-4 border-b border-[#18457c]/15 bg-[#f8fafc] flex items-center justify-between">
+              
+              {/* Right Side: Title, Location & Optional Date */}
+              <div className="text-right space-y-1">
+                <h3 className="text-base sm:text-lg font-bold text-[#112b4e]">
+                  {selectedEvent.title}
+                </h3>
+                <div className="flex items-center gap-2 text-xs text-[#577291]">
+                  {selectedEvent.location && (
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5 text-[#ea0011]" />
+                      {selectedEvent.location}
+                    </span>
+                  )}
+                  {selectedEvent.location && selectedEvent.date && <span>•</span>}
+                  {selectedEvent.date && <span>{selectedEvent.date}</span>}
+                </div>
+              </div>
+
+              {/* Left Side: Close Button */}
+              <button
+                onClick={closeEventModal}
+                className="p-2 rounded-full hover:bg-gray-200 text-[#112b4e] transition-colors cursor-pointer"
+                aria-label="סגור גלריה"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Main Image Stage */}
+            <div className="relative bg-[#0d223c] flex items-center justify-center min-h-[320px] sm:min-h-[420px] max-h-[55vh] overflow-hidden select-none">
+              <img
+                src={selectedEvent.images[currentImageIndex] || selectedEvent.images[0]}
+                alt={`${selectedEvent.title} - תמונה ${currentImageIndex + 1}`}
+                className="max-h-[55vh] w-auto max-w-full object-contain transition-all duration-300"
+              />
+
+              {/* Navigation Arrows */}
+              {selectedEvent.images.length > 1 && (
+                <>
+                  <button
+                    onClick={handlePrevImage}
+                    aria-label="תמונה קודמת"
+                    className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition-transform hover:scale-110 cursor-pointer z-10"
+                  >
+                    <ChevronRight className="w-6 h-6" />
+                  </button>
+                  <button
+                    onClick={handleNextImage}
+                    aria-label="תמונה הבאה"
+                    className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition-transform hover:scale-110 cursor-pointer z-10"
+                  >
+                    <ChevronLeft className="w-6 h-6" />
+                  </button>
+                </>
+              )}
+
+              {/* Photo Counter Pill */}
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-black/60 text-white text-xs font-semibold backdrop-blur-sm">
+                תמונה {currentImageIndex + 1} מתוך {selectedEvent.images.length}
+              </div>
+            </div>
+
+            {/* Thumbnail Strip (if multiple photos) */}
+            {selectedEvent.images.length > 1 && (
+              <div className="px-4 py-3 bg-[#f1f5fa] border-t border-[#18457c]/10 flex items-center justify-center gap-2 overflow-x-auto hide-scrollbar">
+                {selectedEvent.images.map((imgUrl, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentImageIndex(idx)}
+                    className={`w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
+                      currentImageIndex === idx
+                        ? 'border-[#ea0011] scale-105 shadow-md ring-2 ring-[#ea0011]/30'
+                        : 'border-transparent opacity-65 hover:opacity-100'
+                    }`}
+                  >
+                    <img
+                      src={imgUrl}
+                      alt={`תמונה ממוזערת ${idx + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Event Description - ONLY show if present and non-empty */}
+            {selectedEvent.description && selectedEvent.description.trim() !== '' && (
+              <div className="p-5 sm:p-6 overflow-y-auto space-y-2 text-right">
+                <h4 className="text-xs font-bold text-[#577291] uppercase tracking-wider">
+                  על האירוע:
+                </h4>
+                <p className="text-sm sm:text-base text-[#2d4869] leading-relaxed">
+                  {selectedEvent.description}
+                </p>
+              </div>
+            )}
+
+          </div>
+        </div>
+      )}
 
     </div>
   );

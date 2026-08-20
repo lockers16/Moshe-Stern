@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { BookOpen } from 'lucide-react';
 import speechesData from '../data/speeches.json';
 import { SpeechItem } from '../types';
@@ -9,7 +9,22 @@ export const SpeechesSection: React.FC = () => {
     speeches.length > 0 ? speeches[0].id : ''
   );
 
+  const speechDisplayRef = useRef<HTMLDivElement>(null);
+
   const selectedSpeech = speeches.find(s => s.id === selectedSpeechId) || speeches[0];
+
+  const handleSelectSpeech = (id: string) => {
+    setSelectedSpeechId(id);
+    // Smoothly scroll to the speech display so user sees the top of the speech
+    setTimeout(() => {
+      if (speechDisplayRef.current) {
+        const yOffset = -90; // offset for top sticky navbar
+        const element = speechDisplayRef.current;
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 50);
+  };
 
   return (
     <section className="py-12 md:py-16 bg-[#f5f8fc] relative overflow-hidden" id="speeches-page">
@@ -48,7 +63,7 @@ export const SpeechesSection: React.FC = () => {
                 return (
                   <button
                     key={speech.id}
-                    onClick={() => setSelectedSpeechId(speech.id)}
+                    onClick={() => handleSelectSpeech(speech.id)}
                     className={`w-full text-right p-4 rounded-xl border transition-all duration-200 cursor-pointer flex flex-col justify-between ${
                       isSelected
                         ? 'bg-[#18457c] text-white border-[#ea0011] shadow-lg shadow-[#18457c]/25 scale-[1.01]'
@@ -79,7 +94,10 @@ export const SpeechesSection: React.FC = () => {
           </div>
 
           {/* Left/Main Area: Speech Display (lg:col-span-8) */}
-          <div className="lg:col-span-8 bg-white rounded-2xl border border-[#18457c]/15 shadow-xl overflow-hidden flex flex-col text-right">
+          <div
+            ref={speechDisplayRef}
+            className="lg:col-span-8 bg-white rounded-2xl border border-[#18457c]/15 shadow-xl overflow-hidden flex flex-col text-right scroll-mt-24"
+          >
             
             {selectedSpeech ? (
               <>

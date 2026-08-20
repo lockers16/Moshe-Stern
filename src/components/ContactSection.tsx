@@ -116,10 +116,6 @@ export const ContactSection: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#18457c]/10 text-[#18457c] text-xs font-bold shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-[#ea0011]" />
-            <span>פרטי קשר והתקשרות ישירה</span>
-          </div>
           <h1 className="text-3xl md:text-5xl font-extrabold text-[#112b4e] tracking-tight">
             יצירת קשר עם משה שטרן
           </h1>
