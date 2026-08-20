@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MessageCircle, Send, CheckCircle2, Sparkles, ShieldCheck, MailCheck } from 'lucide-react';
+import { Phone, Mail, MessageCircle, Send, CheckCircle2, Sparkles, ShieldCheck } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import siteConfig from '../data/siteConfig.json';
 
@@ -89,14 +89,6 @@ export const ContactSection: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleSendViaMailto = () => {
-    const subject = encodeURIComponent(`פנייה חדשה מהאתר שלך, מאת ${name || 'מתעניין'}`);
-    const body = encodeURIComponent(
-      `שלום משה,\n\nשם מלא: ${name}\nמספר טלפון: ${phone}\nדוא"ל לתשובה: ${email}\nסוג האירוע: ${eventType}\n\nתוכן הפנייה:\n${message}`
-    );
-    window.location.href = `mailto:${siteConfig.contactEmail}?subject=${subject}&body=${body}`;
   };
 
   const handleWhatsApp = () => {
@@ -206,14 +198,7 @@ export const ContactSection: React.FC = () => {
                 <p className="text-sm text-[#2d4869] max-w-md mx-auto">
                   תודה שפנית, {name || 'יקיר/ה'}. משה שטרן קיבל את פנייתך ויחזור אליך בהקדם.
                 </p>
-                <div className="pt-3 flex flex-wrap items-center justify-center gap-3">
-                  <button
-                    onClick={handleSendViaMailto}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#18457c] hover:bg-[#123662] text-white text-xs font-bold transition-colors shadow-sm cursor-pointer"
-                  >
-                    <MailCheck className="w-4 h-4 text-[#ea0011]" />
-                    <span>פתיחת הפנייה ישירות בתוכנת הדוא״ל שלכם</span>
-                  </button>
+                <div className="pt-3 flex items-center justify-center">
                   <button
                     onClick={() => {
                       setSubmitted(false);
@@ -223,7 +208,7 @@ export const ContactSection: React.FC = () => {
                       setEventType('');
                       setMessage('');
                     }}
-                    className="text-xs font-bold text-[#ea0011] hover:underline cursor-pointer px-4 py-2"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#18457c] hover:bg-[#123662] text-white text-xs font-bold transition-colors shadow-sm cursor-pointer"
                   >
                     שליחת פנייה חדשה
                   </button>
