@@ -1,6 +1,6 @@
 [
   {
-    "id": "rev-speech-1",
+    "id": "yinon-president",
     "name": "בית הנשיא",
     "role": "ינון גוטל-קליין – מנהל מערך התוכן ויועץ בכיר לנשיא המדינה לשעבר",
     "date": "",
@@ -11,7 +11,7 @@
     "attachment": "/reviews-speeches/המלצת ינון גוטל-קליין.pdf"
   },
   {
-    "id": "rev-speech-2",
+    "id": "raphi-peretz",
     "name": "תא\"ל (במיל') הרב רפי פרץ",
     "role": "שר החינוך לשעבר",
     "date": "פברואר 2021",
@@ -22,7 +22,7 @@
     "attachment": "/reviews-speeches/המלצת השר רפי פרץ.pdf"
   },
   {
-    "id": "rev-speech-3",
+    "id": "gilad-erdan",
     "name": "גלעד ארדן",
     "role": "חבר הכנסת והשר לביטחון פנים לשעבר",
     "date": "יוני 2020",
@@ -33,7 +33,7 @@
     "attachment": "/reviews-speeches/המלצת גלעד ארדן.pdf"
   },
   {
-    "id": "rev-speech-4",
+    "id": "ayelet-shaked",
     "name": "איילת שקד",
     "role": "חברת הכנסת ושרת המשפטים לשעבר",
     "date": "אפריל 2020",
@@ -44,7 +44,7 @@
     "attachment": "/reviews-speeches/המלצת איילת שקד.pdf"
   },
   {
-    "id": "rev-speech-5",
+    "id": "yuli-edelstein",
     "name": "יולי (יואל) אדלשטיין",
     "role": "חבר הכנסת ויו\"ר הכנסת לשעבר",
     "date": "מאי 2017",
@@ -54,7 +54,7 @@
     "attachment": "/reviews-speeches/המלצת היו''ר אדלשטיין.pdf"
   },
   {
-    "id": "rev-speech-6",
+    "id": "ceo-knesset",
     "name": "אלברט סחרוביץ",
     "role": "ראש מטה יו\"ר הכנסת ומנכ\"ל הכנסת לשעבר",
     "date": "מאי 2017",
@@ -65,7 +65,7 @@
     "attachment": "/reviews-speeches/המלצת מנכ''ל הכנסת.pdf"
   },
   {
-    "id": "rev-speech-7",
+    "id": "ruvi-rivlin",
     "name": "ראובן (רובי) ריבלין",
     "role": "חבר הכנסת, יו\"ר הכנסת ונשיא המדינה לשעבר",
     "date": "מאי 2010",

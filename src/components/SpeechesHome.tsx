@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Sparkles, BookOpen, MessageSquare, ArrowLeft, PenTool, Star, Quote, FileText, Image as ImageIcon } from 'lucide-react';
+import { Sparkles, BookOpen, MessageSquare, ArrowLeft, Pencil, Star, Quote, FileText, Image as ImageIcon } from 'lucide-react';
 import speechesData from '../data/speeches.json';
 import reviewsSpeechesData from '../data/reviewsSpeeches.json';
 import featuredItems from '../data/featuredItems.json';
@@ -82,7 +82,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
             {/* Right: Text & Action */}
             <div className="lg:col-span-7 space-y-6 text-right">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ea0011]/10 border border-[#ea0011]/20 text-[#ea0011] text-xs md:text-sm font-bold shadow-sm">
-                <PenTool className="w-4 h-4 text-[#ea0011]" />
+                <Pencil className="w-4 h-4 text-[#ea0011]" />
                 <span>כתיבת תוכן ונאומים • משה שטרן</span>
               </div>
 
@@ -221,7 +221,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 rounded-2xl bg-[#fffafa] border border-[#ea0011]/15 space-y-3">
               <div className="w-12 h-12 rounded-xl bg-[#ea0011] text-white flex items-center justify-center shadow-md">
-                <PenTool className="w-6 h-6 text-white" />
+                <Pencil className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-lg font-bold text-[#112b4e]">שיחת תחקיר והקשבה מעמיקה</h3>
               <p className="text-xs sm:text-sm text-[#425d7e] leading-relaxed">

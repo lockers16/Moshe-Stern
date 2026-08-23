@@ -1,15 +1,19 @@
 [
+
   {
-    "id": "jerusalem-day-ceremony",
-    "title": "טקס יום ירושלים הממלכתי",
-    "location": "עיריית ירושלים, כיכר ספרא",
-    "date": "מאי 2024",
-    "description": "הנחיית הטקס המרכזי לציון יום ירושלים בהשתתפות נבחרי ציבור, אמנים ומאות תושבים.",
-    "categories": "טקסים לעיריית ירושלים, הנחיית מופעים",
+    "id": "communities-4-2025",
+    "title": "טקס מפגש ראשי קהילות וגבאים לקראת ראש השנה תשפ\"ו",
+    "location": "עיריית ירושלים, כיכר ספרא"
+    "date": "ספטמבר 2025",
+    "description": "צילום: ארנון בוסאני",
+    "categories": "טקסים לעיריית ירושלים",
     "images": [
-      "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1200&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=1200&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=1200&auto=format&fit=crop&q=80"
+      "hosting/communities4-25/ARNO4243-3",
+      "hosting/communities4-25/ARNO4183-2",
+      "hosting/communities4-25/ARNO4274-2",
+      "hosting/communities4-25/ARNO4237-2",
+      "hosting/communities4-25/ARNO4276-2",
+      "hosting/communities4-25/ARNO4295"
     ]
   },
   {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, MessageSquareQuote, Mail, Mic2, BookOpen, ArrowLeft } from 'lucide-react';
+import { Menu, X, MessageSquareQuote, Mail, Mic2, BookOpen, ArrowLeft, Pencil } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Logo } from './Logo';
 
@@ -150,13 +150,16 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   <span>המלצות וביקורות</span>
                 </button>
 
-                {/* Switch link to Speeches */}
+                {/* Switch button to Speeches - Glass / Semi-transparent style */}
+                <div className="h-5 w-px bg-white/20 mx-1 hidden lg:block" />
                 <button
                   onClick={() => handleNavClick('speeches-home')}
-                  className="text-xs text-white/80 hover:text-white hover:bg-white/10 px-2.5 py-1 rounded-md transition-all cursor-pointer mr-1"
+                  className="bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-lg font-bold text-xs sm:text-sm transition-all duration-200 cursor-pointer flex items-center gap-1.5 border border-white/25 hover:border-white/40 shadow-xs hover:scale-105"
                   title="מעבר לאזור כתיבת תוכן ונאומים"
                 >
-                  לכתיבת תוכן ונאומים ←
+                  <Pencil className="w-3.5 h-3.5 text-white" />
+                  <span>לכתיבת תוכן ונאומים</span>
+                  <ArrowLeft className="w-3.5 h-3.5 mr-0.5 opacity-80" />
                 </button>
               </motion.div>
             )}
@@ -179,7 +182,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                       : 'bg-white/15 text-white hover:bg-white/25 border-white/20'
                   }`}
                 >
-                  <BookOpen className="w-3.5 h-3.5" />
+                  <Pencil className="w-3.5 h-3.5" />
                   <span>כתיבת תוכן ונאומים</span>
                 </button>
 
@@ -208,13 +211,16 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   <span>המלצות וביקורות</span>
                 </button>
 
-                {/* Switch link to Hosting */}
+                {/* Switch button to Hosting - Glass / Semi-transparent style */}
+                <div className="h-5 w-px bg-white/20 mx-1 hidden lg:block" />
                 <button
                   onClick={() => handleNavClick('hosting-home')}
-                  className="text-xs text-white/80 hover:text-white hover:bg-white/10 px-2.5 py-1 rounded-md transition-all cursor-pointer mr-1"
+                  className="bg-white/10 hover:bg-white/20 text-white px-3.5 py-1.5 rounded-lg font-bold text-xs sm:text-sm transition-all duration-200 cursor-pointer flex items-center gap-1.5 border border-white/25 hover:border-white/40 shadow-xs hover:scale-105"
                   title="מעבר לאזור הנחיית טקסים"
                 >
-                  להנחיית טקסים ←
+                  <Mic2 className="w-3.5 h-3.5 text-[#ffdad5]" />
+                  <span>להנחיית טקסים</span>
+                  <ArrowLeft className="w-3.5 h-3.5 mr-0.5 opacity-80" />
                 </button>
               </motion.div>
             )}
@@ -242,7 +248,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   onClick={() => handleNavClick('speeches-home')}
                   className="px-3.5 py-1.5 rounded-lg font-bold bg-[#ea0011] hover:bg-[#c9000e] text-white transition-all cursor-pointer flex items-center gap-1.5 shadow-sm border border-white/20 hover:scale-105"
                 >
-                  <BookOpen className="w-3.5 h-3.5 text-white" />
+                  <Pencil className="w-3.5 h-3.5 text-white" />
                   <span>כתיבת תוכן ונאומים</span>
                 </button>
               </motion.div>
@@ -342,7 +348,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 }`}
               >
                 <span>דף הבית לנאומים</span>
-                <BookOpen className="w-3.5 h-3.5" />
+                <Pencil className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => handleNavClick('speeches-full')}
