@@ -58,7 +58,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 <span>הנחיית טקסים</span>
               </button>
 
-              {/* 2. כתיבת נאומים */}
+              {/* 2. כתיבת תוכן ונאומים */}
               <button
                 onClick={() => onNavigate('speeches-home')}
                 className="bg-white hover:bg-[#fff5f5] text-[#ea0011] border-2 border-[#ea0011]/25 hover:border-[#ea0011] px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm hover:shadow-md group"
@@ -66,7 +66,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 <div className="w-8 h-8 rounded-lg bg-[#ea0011]/10 group-hover:bg-[#ea0011] group-hover:text-white text-[#ea0011] flex items-center justify-center transition-colors">
                   <BookOpen className="w-4 h-4 text-[#ea0011] group-hover:text-white" />
                 </div>
-                <span>כתיבת נאומים</span>
+                <span>כתיבת תוכן ונאומים</span>
               </button>
 
               {/* 3. אודות משה שטרן */}

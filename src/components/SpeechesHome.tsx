@@ -83,7 +83,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
             <div className="lg:col-span-7 space-y-6 text-right">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ea0011]/10 border border-[#ea0011]/20 text-[#ea0011] text-xs md:text-sm font-bold shadow-sm">
                 <PenTool className="w-4 h-4 text-[#ea0011]" />
-                <span>כתיבת נאומים וטקסטים • משה שטרן</span>
+                <span>כתיבת תוכן ונאומים • משה שטרן</span>
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#112b4e] leading-[1.2] tracking-tight">
@@ -102,7 +102,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
                   className="bg-[#ea0011] hover:bg-[#c9000e] text-white px-6 py-3.5 rounded-xl font-bold text-sm sm:text-base shadow-md hover:shadow-xl transition-all duration-200 flex items-center gap-2 cursor-pointer"
                 >
                   <BookOpen className="w-5 h-5 text-white" />
-                  <span>לכל דוגמאות הנאומים</span>
+                  <span>לכל דוגמאות הכתיבה</span>
                   <ArrowLeft className="w-4 h-4" />
                 </button>
 
@@ -111,7 +111,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
                   className="bg-white hover:bg-[#fff5f5] text-[#ea0011] border-2 border-[#ea0011]/25 hover:border-[#ea0011] px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-sm"
                 >
                   <MessageSquare className="w-5 h-5 text-[#ea0011]" />
-                  <span>המלצות וביקורות לנאומים</span>
+                  <span>המלצות וביקורות על תוכן ונאומים</span>
                 </button>
               </div>
             </div>
@@ -262,7 +262,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
               <span>המלצות לקוחות</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#112b4e]">
-              מה מספרים מי שנאמו עם הטקסטים של משה?
+              מה מספרים מי שנעזרו בשירותי הכתיבה של משה?
             </h2>
           </div>
 

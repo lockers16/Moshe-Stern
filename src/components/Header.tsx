@@ -154,9 +154,9 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 <button
                   onClick={() => handleNavClick('speeches-home')}
                   className="text-xs text-white/80 hover:text-white hover:bg-white/10 px-2.5 py-1 rounded-md transition-all cursor-pointer mr-1"
-                  title="מעבר לאזור כתיבת נאומים"
+                  title="מעבר לאזור כתיבת תוכן ונאומים"
                 >
-                  לכתיבת נאומים ←
+                  לכתיבת תוכן ונאומים ←
                 </button>
               </motion.div>
             )}
@@ -170,7 +170,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 transition={{ duration: 0.18, ease: 'easeOut' }}
                 className="flex items-center gap-1 xl:gap-1.5"
               >
-                {/* Distinctive Section Button (כתיבת נאומים) */}
+                {/* Distinctive Section Button (כתיבת תוכן ונאומים) */}
                 <button
                   onClick={() => handleNavClick('speeches-home')}
                   className={`px-3.5 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 border shadow-sm ${
@@ -180,7 +180,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   }`}
                 >
                   <BookOpen className="w-3.5 h-3.5" />
-                  <span>כתיבת נאומים</span>
+                  <span>כתיבת תוכן ונאומים</span>
                 </button>
 
                 {/* דוגמאות לנאומים */}
@@ -237,13 +237,13 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   <span>הנחיית טקסים ואירועים</span>
                 </button>
 
-                {/* Button: כתיבת נאומים */}
+                {/* Button: כתיבת תוכן ונאומים */}
                 <button
                   onClick={() => handleNavClick('speeches-home')}
                   className="px-3.5 py-1.5 rounded-lg font-bold bg-[#ea0011] hover:bg-[#c9000e] text-white transition-all cursor-pointer flex items-center gap-1.5 shadow-sm border border-white/20 hover:scale-105"
                 >
                   <BookOpen className="w-3.5 h-3.5 text-white" />
-                  <span>כתיבת נאומים</span>
+                  <span>כתיבת תוכן ונאומים</span>
                 </button>
               </motion.div>
             )}
@@ -331,9 +331,9 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             </div>
           </div>
 
-          {/* Section 2: כתיבת נאומים */}
+          {/* Section 2: כתיבת תוכן ונאומים */}
           <div className="pt-2 border-t border-white/15">
-            <div className="text-[11px] font-bold text-white/70 px-2 pb-1">כתיבת נאומים</div>
+            <div className="text-[11px] font-bold text-white/70 px-2 pb-1">כתיבת תוכן ונאומים</div>
             <div className="space-y-1">
               <button
                 onClick={() => handleNavClick('speeches-home')}

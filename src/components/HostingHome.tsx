@@ -178,7 +178,7 @@ export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
               טעימה מגלריית האירועים והטקסים
             </h2>
             <p className="text-sm sm:text-base text-[#425d7e]">
-              3 רגעים נבחרים מתוך מגוון האירועים שהונחו על ידי משה שטרן
+            רגעים נבחרים מתוך מגוון האירועים שהונחו על ידי משה שטרן
             </p>
           </div>
 
