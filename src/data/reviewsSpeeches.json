@@ -1,6 +1,17 @@
 [
   {
     "id": "rev-speech-1",
+    "name": "ינון גוטל-קליין",
+    "role": "מנהל מערך התוכן ויועץ בכיר לנשיא המדינה לשעבר",
+    "date": "",
+    "content": "מזה חמש שנים נמנה משה עם צוות הכתיבה של בית הנשיא, ובמהלכן היה שותף למאות רבות, אם לא למעלה מכך, של תכנים ממלכתיים מסוגים שונים ומגוונים, לשביעות רצוננו המלאה. \n מטבע הדברים, קשת הנושאים בהם נדרש משה לעסוק רחבה מאוד, בהתאם למגוון העצום של תחומי העשייה של בית הנשיא בארץ וחוצה לה, כשבכל אחד ואחד מהם קיבלנו ממשה תוצרים הכתובים בקפידה, בחן, בעומק וברהיטות, מתוך הפגנת ידע נרחב, בלשון עשירה ובעברית משובחת... \n כמנהל מערך התוכן של בית הנשיא נהניתי מאוד לעבוד עמו. יחסי האנוש הנעימים, אורך הרוח ומאור הפנים שבהם הוא ניחן, ולא פחות – עמידתו הקפדנית בלוחות הזמנים – הפכו את העבודה עמו לחוויה של מקצוענות מרשימה.",
+    "rating": 5,
+    "avatarUrl": "https://static.zman.co.il/www/uploads/terms-images/writer/inonn-medium.jpg",
+    "subject": "כתיבת נאומים לנשיא המדינה",
+    "attachment": "/reviews-speeches/המלצת ינון גוטל-קליין.pdf"
+  },
+  {
+    "id": "rev-speech-2",
     "name": "תא\"ל (במיל') הרב רפי פרץ",
     "role": "חבר כנסת ושר החינוך לשעבר",
     "date": "פברואר 2021",
@@ -11,7 +22,7 @@
     "attachment": "/reviews-speeches/המלצת השר רפי פרץ.pdf"
   },
   {
-    "id": "rev-speech-2",
+    "id": "rev-speech-3",
     "name": "גלעד ארדן",
     "role": "חבר הכנסת והשר לביטחון פנים לשעבר",
     "date": "יוני 2020",
@@ -22,7 +33,7 @@
     "attachment": "/reviews-speeches/המלצת גלעד ארדן.pdf"
   },
   {
-    "id": "rev-speech-3",
+    "id": "rev-speech-4",
     "name": "איילת שקד",
     "role": "חברת הכנסת ושרה שמפטים לשעבר",
     "date": "אפריל 2020",
@@ -33,7 +44,7 @@
     "attachment": "/reviews-speeches/המלצת איילת שקד.pdf"
   },
   {
-    "id": "rev-speech-4",
+    "id": "rev-speech-5",
     "name": "יולי (יואל) אדלשטיין",
     "role": "חבר הכנסת ויו\"ר הכנסת לשעבר",
     "date": "מאי 2017",
@@ -43,7 +54,18 @@
     "attachment": "/reviews-speeches/המלצת היו''ר אדלשטיין.pdf"
   },
   {
-    "id": "rev-speech-5",
+    "id": "rev-speech-6",
+    "name": "אלברט סחרוביץ",
+    "role": "ראש מטה יו\"ר הכנסת ומנכ\"ל הכנסת לשעבר",
+    "date": "מאי 2017",
+    "content": "בהיותי ראש מטה היו\"ר התרשמתי עמוקות מכישוריו ומאישיותו של משה, שהשתלב במהרה בעבודת צוות היו\"ר ונתן לנו מענה מקצועי לעילא לכל נושא אליו נדרש: מנאומים ומכתבים עד ניו-מדיה ומאמרים... \n משה ניחן בכישורי ניסוח יוצאי דופן וזוכה להערכה מקצועית גבוהה הן ממעסיקיו והן מסובביו ועמיתיו. אני מוצא לנכון לציין גם את מזגו הנוח, את התנהלותו הבין-אישית הנעימה ואת נכונותו לתרום לזולת מכישוריו גם מעל ומעבר לנדרש בתפקידו.",
+    "rating": 5,
+    "avatarUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Saeimas_priek%C5%A1s%C4%93d%C4%93t%C4%81jas_viz%C4%ABte_Izra%C4%93l%C4%81_%2849424987921%29_%28cropped%29.jpg/960px-Saeimas_priek%C5%A1s%C4%93d%C4%93t%C4%81jas_viz%C4%ABte_Izra%C4%93l%C4%81_%2849424987921%29_%28cropped%29.jpg?utm_source=he.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "subject": "כתיבת נאומים ליושבי ראש הכנסת",
+    "attachment": "/reviews-speeches/המלצת מנכ''ל הכנסת.pdf"
+  },
+  {
+    "id": "rev-speech-7",
     "name": "ראובן (רובי) ריבלין",
     "role": "חבר הכנסת, יו\"ר הכנסת ונשיא המדינה לשעבר",
     "date": "מאי 2010",
@@ -52,17 +74,7 @@
     "avatarUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Reuven_Rivlin_as_the_president_of_Israel.jpg/960px-Reuven_Rivlin_as_the_president_of_Israel.jpg?utm_source=he.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
     "subject": "כתיבת נאומים ליושבי ראש הכנסת",
     "attachment": "/reviews-speeches/המלצה רובי ריבלין.pdf"
-  },
-  
-  {
-    "id": "rev-speech-6",
-    "name": "משפחת לוי",
-    "role": "בני המשפחה",
-    "date": "אוקטובר 2023",
-    "content": "ברגע הכי קשה שלנו, משה היה שם עבורנו בעדינות וברגישות יוצאת דופן. הוא עזר לנו לנסח דברי פרידה מכבדים ומנחמים מסבא שלנו ז״ל. הטקסט היה מלא אור, עטף את המשפחה והנציח בדיוק את דרכו וערכיו.",
-    "rating": 0,
-    "avatarUrl": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80",
-    "subject": "דברי הספד וזיכרון",
-    "attachment": ""
   }
+  
+  
 ]

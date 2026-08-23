@@ -1,17 +1,45 @@
 import React, { useState, useRef } from 'react';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, FileText, Image as ImageIcon, ExternalLink, ZoomIn, X } from 'lucide-react';
 import speechesData from '../data/speeches.json';
 import { SpeechItem } from '../types';
+import FormattedText from './FormattedText';
 
 export const SpeechesSection: React.FC = () => {
   const speeches: SpeechItem[] = speechesData;
   const [selectedSpeechId, setSelectedSpeechId] = useState<string>(
     speeches.length > 0 ? speeches[0].id : ''
   );
+  const [imageModalOpen, setImageModalOpen] = useState(false);
 
   const speechDisplayRef = useRef<HTMLDivElement>(null);
 
   const selectedSpeech = speeches.find(s => s.id === selectedSpeechId) || speeches[0];
+
+  // Extract attachment details (string or object)
+  let attachmentUrl = '';
+  let attachmentType: 'pdf' | 'image' = 'image';
+
+  if (selectedSpeech?.attachment) {
+    if (typeof selectedSpeech.attachment === 'string' && selectedSpeech.attachment.trim() !== '') {
+      attachmentUrl = selectedSpeech.attachment.trim();
+      attachmentType = attachmentUrl.toLowerCase().endsWith('.pdf') ? 'pdf' : 'image';
+    } else if (typeof selectedSpeech.attachment === 'object' && selectedSpeech.attachment.url) {
+      attachmentUrl = selectedSpeech.attachment.url;
+      attachmentType =
+        selectedSpeech.attachment.type ||
+        (attachmentUrl.toLowerCase().endsWith('.pdf') ? 'pdf' : 'image');
+    }
+  }
+
+  const hasAttachment = Boolean(attachmentUrl);
+
+  const handleAttachmentClick = () => {
+    if (attachmentType === 'pdf') {
+      window.open(attachmentUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      setImageModalOpen(true);
+    }
+  };
 
   const handleSelectSpeech = (id: string) => {
     setSelectedSpeechId(id);
@@ -114,6 +142,29 @@ export const SpeechesSection: React.FC = () => {
                       </span>
                     )}
                   </div>
+
+                  {/* Attachment Button on top header if present */}
+                  {hasAttachment && (
+                    <button
+                      type="button"
+                      onClick={handleAttachmentClick}
+                      className="px-4 py-1.5 rounded-lg bg-[#ea0011] hover:bg-[#c9000e] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer"
+                    >
+                      {attachmentType === 'pdf' ? (
+                        <>
+                          <FileText className="w-3.5 h-3.5" />
+                          <span>לקריאת הנאום המלא</span>
+                          <ExternalLink className="w-3 h-3 opacity-80" />
+                        </>
+                      ) : (
+                        <>
+                          <ImageIcon className="w-3.5 h-3.5" />
+                          <span>לקריאת הנאום המלא</span>
+                          <ZoomIn className="w-3 h-3 opacity-80" />
+                        </>
+                      )}
+                    </button>
+                  )}
                 </div>
 
                 {/* Speech Title & Optional Author's Note */}
@@ -126,16 +177,41 @@ export const SpeechesSection: React.FC = () => {
                   {selectedSpeech.authorNote && selectedSpeech.authorNote.trim() !== '' && (
                     <div className="p-4 bg-[#f5f8fc] rounded-xl border-r-4 border-[#18457c] text-xs sm:text-sm text-[#2d4869] leading-relaxed">
                       <span className="font-bold text-[#18457c]">הערת הכותב: </span>
-                      <span>{selectedSpeech.authorNote}</span>
+                      <span><FormattedText text={selectedSpeech.authorNote} /></span>
                     </div>
                   )}
                 </div>
 
                 {/* Speech Full Content in Single Part with David Font and Reduced Font Size */}
-                <div className="p-6 sm:p-8 lg:p-10 bg-[#fcfdfe]">
+                <div className="p-6 sm:p-8 lg:p-10 bg-[#fcfdfe] space-y-6">
                   <div className="font-david text-base sm:text-lg text-[#112b4e] leading-relaxed sm:leading-loose whitespace-pre-line select-none">
-                    {selectedSpeech.content}
+                    <FormattedText text={selectedSpeech.content} />
                   </div>
+
+                  {/* Prominent bottom button for reading full speech if attachment exists */}
+                  {hasAttachment && (
+                    <div className="pt-6 border-t border-[#18457c]/10 flex justify-center">
+                      <button
+                        type="button"
+                        onClick={handleAttachmentClick}
+                        className="px-6 py-3 rounded-xl bg-[#ea0011] hover:bg-[#c9000e] text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer"
+                      >
+                        {attachmentType === 'pdf' ? (
+                          <>
+                            <FileText className="w-5 h-5" />
+                            <span>לקריאת הנאום המלא</span>
+                            <ExternalLink className="w-4 h-4 opacity-80" />
+                          </>
+                        ) : (
+                          <>
+                            <ImageIcon className="w-5 h-5" />
+                            <span>לקריאת הנאום המלא</span>
+                            <ZoomIn className="w-4 h-4 opacity-80" />
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </>
             ) : (
@@ -149,6 +225,45 @@ export const SpeechesSection: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Image Overlay Modal */}
+      {imageModalOpen && hasAttachment && (
+        <div
+          className="fixed inset-0 z-60 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
+          onClick={() => setImageModalOpen(false)}
+          dir="rtl"
+        >
+          <div
+            className="bg-white rounded-2xl max-w-3xl w-full overflow-hidden shadow-2xl border border-white/20 relative flex flex-col max-h-[95vh] animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="px-5 py-3.5 bg-[#f8fafc] border-b border-gray-200 flex items-center justify-between">
+              <div className="text-sm font-bold text-[#112b4e] flex items-center gap-2">
+                <ImageIcon className="w-4 h-4 text-[#ea0011]" />
+                <span>
+                  {selectedSpeech ? `נאום מלא – ${selectedSpeech.title}` : 'נאום מלא'}
+                </span>
+              </div>
+              <button
+                onClick={() => setImageModalOpen(false)}
+                aria-label="סגור תמונה"
+                className="p-1.5 rounded-full hover:bg-gray-200 text-gray-700 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-4 bg-gray-100 flex items-center justify-center overflow-auto max-h-[80vh]">
+              <img
+                src={attachmentUrl}
+                alt={selectedSpeech ? selectedSpeech.title : 'נאום מלא'}
+                className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-md"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
+

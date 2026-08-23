@@ -67,6 +67,11 @@ export interface SpeechItem {
   subject: string;
   authorNote?: string;
   content: string;
+  attachment?: string | {
+    type?: 'pdf' | 'image';
+    url: string;
+    title?: string;
+  };
 }
 
 export interface ReviewItem {
