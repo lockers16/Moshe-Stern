@@ -7,7 +7,7 @@ export interface GalleryEventItem {
   date?: string;
   description?: string;
   categories: string; // Comma-separated category names (e.g. "טקסים לעיריית ירושלים, הנחיית מופעים")
-  folder: string; // Folder name under /gallery/
+  folder?: string;
   images: string[];
 }
 
