@@ -1,39 +1,50 @@
 [
   {
     "id": "rev-speech-1",
-    "name": "שירלי ואביב קדם",
-    "role": "הורי הכלה",
-    "date": "יולי 2024",
-    "content": "תודה ענקית על כתיבת נאום הברכה שלנו לבתנו ביום חתונתה. קיבלנו כל כך הרבה מחמאות על כמה שהטקסט היה אותנטי ומרגש בלי להרגיש מליצי מדי. משה, יש לך כישרון ענק להקשיב ולהפוך רגשות למילים חיות. עזרת לנו להעביר מסר שיישאר לנצח.",
+    "name": "תא\"ל (במיל') הרב רפי פרץ",
+    "role": "חבר כנסת ושר החינוך לשעבר",
+    "date": "פברואר 2021",
+    "content": "הסתייעתי רבות בנאומים שמשה כתב עבורי במהלך כהונתי כשר החינוך בממשלת ישראל ה- 34 (תשע\"ט-תש\"פ, 2019-2020). \n **בכולם ניכר חותמו המיוחד ויכולותיו בהעמדת טקסטים קולעים ומלוטשים גם בפרק זמן קצר, טביעת עינו המיוחדת, הניסוח המהוקצע, תובנותיו העמוקות וניסיונו העשיר בתחום ייחודי זה.** \n לא ייפלא, אפוא, שכבר מהרגע הראשון התחברתי מאוד לתכנים שהוא עמיד לרשותי.",
     "rating": 5,
-    "avatarUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80",
-    "subject": "ברכת הורים בחתונה",
-    "attachment": ""
+    "avatarUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Rafi_Peretz_%28ISH_6832%29.jpg/960px-Rafi_Peretz_%28ISH_6832%29.jpg?utm_source=he.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "subject": "כתיבת נאומים לשרים",
+    "attachment": "/reviews-speeches/המלצת השר רפי פרץ.pdf"
   },
   {
     "id": "rev-speech-2",
-    "name": "יונתן ארז",
-    "role": "מנכ\"ל עמותת 'אופק לחינוך'",
-    "date": "ינואר 2024",
-    "content": "משה ניסח עבורנו את נאום הפרידה מהמייסדים ואת דברי התודה לתורמים באירוע הגאלה השנתי. המילים שלו הצליחו להעביר את כל כובד המשקל והחזון של העמותה בעדינות, בעוצמה ובדיוק מופלא. התגובות מהתורמים היו יוצאות דופן והובילו לחיזוק הקשרים.",
+    "name": "גלעד ארדן",
+    "role": "חבר הכנסת והשר לביטחון פנים לשעבר",
+    "date": "יוני 2020",
+    "content":  "משה כתב עבורי נאומים ודברי ברכה לטקסים ולאירועים בהם נשאתי דברים במהלך כהונתי כשר לביטחון הפנים, בתקופה גדושה באירועים מבית ומחוץ (2018–2020). \n **צוות משרדי ואני נהנינו משיתוף הפעולה עם משה, שהשכיל להעמיד לרשותי את מיטב ניסיונו ומיומנותו לשם יצירת טקסטים מכובדים, רלוונטיים ומעוררי עניין.**",
     "rating": 5,
-    "avatarUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
-    "subject": "נאום תורמים בערב גאלה",
-    "attachment": ""
+    "avatarUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Michael_Regan_met_with_Gilad_Erdan_at_EPA_HQ_2021_%28cropped%29.jpg/960px-Michael_Regan_met_with_Gilad_Erdan_at_EPA_HQ_2021_%28cropped%29.jpg?utm_source=he.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "subject": "כתיבת נאומים לשרים",
+    "attachment": "/reviews-speeches/המלצת גלעד ארדן.pdf"
   },
   {
     "id": "rev-speech-3",
-    "name": "דנה וגיל ברקוביץ׳",
-    "role": "הורים של נועם",
-    "date": "מרץ 2024",
-    "content": "היינו כל כך לחוצים מהדרשה של נועם. משה ישב איתו בסבלנות, בנה איתו טקסט שמתאים בדיוק לאופי שלו, ואימן אותו על שפת גוף ונשימות. הילד עלה לבמה עם ביטחון של נואם מקצועי ודיבר בצורה טבעית ומרגשת. חוויה מעצימה לנועם שתלווה אותו עוד שנים רבות.",
+    "name": "איילת שקד",
+    "role": "חברת הכנסת ושרה שמפטים לשעבר",
+    "date": "אפריל 2020",
+    "content": "בעת כהונתי כשרת המשפטים, כתב עבורי משה עשרות נאמים ודברי ברכה במשך כשנתיים (2018–2019). התרשמתי מיד כי משה ניחן בשילוב מנצח שבין ידע נרחב ובין יכולת ניסוח מצוינת ובהירה, ששירתה אותי נאמנה... \n בכל עת ידעתי כי ניתן לסמוך על משה כי יעמיד לרשותי טקסט בהיר, חד ומעניין, והוא עשה זאת לעיתיד באילוצי סד זמנים קצר.",
     "rating": 5,
-    "avatarUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
-    "subject": "דרשת בר מצווה מותאמת אישית",
-    "attachment": ""
+    "avatarUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Ayelet_Shaked_%28SHL_8986%29.jpg/960px-Ayelet_Shaked_%28SHL_8986%29.jpg?utm_source=he.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "subject": "כתיבת נאומים לשרים",
+    "attachment": "/reviews-speeches/המלצת איילת שקד.pdf"
   },
   {
     "id": "rev-speech-4",
+    "name": "ראובן (רובי) ריבלין",
+    "role": "חבר הכנסת, יו\"ר הכנסת ונשיא המדינה לשעבר",
+    "date": "מאי 2010",
+    "content": "משה תורם באופן משמעותי לעבודתי ולעבודת הלשכה, ומביא לידי ביטוי את יכולותיו ואת ניסיוני העשיר במגוון תחומים: הוא משיב לפניות ציבור רבות בקשרת רחבה של נושאים, מסייע בקיום הקשר השוטף והאינטנסיבי עם אמצעי התקשורת, ושותף לכתיבת הנאומים ודברי הברכה הרבים שאני נושא מתוקף תפקידי... \n אני מכיר את משה כאדם מסור לתפקידו, העובד ביעילות ובמיומנות, כאדפ נעים הליכות ונעים שיחה.",
+    "rating": 5,
+    "avatarUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Reuven_Rivlin_as_the_president_of_Israel.jpg/960px-Reuven_Rivlin_as_the_president_of_Israel.jpg?utm_source=he.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "subject": "כתיבת נאומים ליושבי ראש הכנסת",
+    "attachment": "/reviews-speeches/המלצה רובי ריבלין.pdf"
+  },
+  {
+    "id": "rev-speech-5",
     "name": "עו״ד עמית שפירא",
     "role": "שותף מנהל, פירמת עורכי דין",
     "date": "נובמבר 2023",
@@ -44,7 +55,7 @@
     "attachment": ""
   },
   {
-    "id": "rev-speech-5",
+    "id": "rev-speech-6",
     "name": "משפחת לוי",
     "role": "בני המשפחה",
     "date": "אוקטובר 2023",

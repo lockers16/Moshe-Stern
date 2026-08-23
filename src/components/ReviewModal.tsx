@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Quote, FileText, Image as ImageIcon, ExternalLink, ZoomIn } from 'lucide-react';
 import { ReviewItem } from '../types';
+import FormattedText from './FormattedText';
 
 interface ReviewModalProps {
   review: ReviewItem | null;
@@ -100,7 +101,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
           <div className="space-y-3">
             <Quote className={`w-8 h-8 opacity-30 -mb-2 ${isSpeeches ? 'text-[#ea0011]' : 'text-[#18457c]'}`} />
             <p className="text-base sm:text-lg text-[#112b4e] leading-relaxed font-serif whitespace-pre-line">
-              ״{review.content}״
+              ״<FormattedText text={review.content} />״
             </p>
           </div>
 

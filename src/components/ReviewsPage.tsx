@@ -4,6 +4,7 @@ import reviewsHostingData from '../data/reviewsHosting.json';
 import reviewsSpeechesData from '../data/reviewsSpeeches.json';
 import { ReviewItem } from '../types';
 import { ReviewModal } from './ReviewModal';
+import FormattedText from './FormattedText';
 
 interface ReviewsPageProps {
   type?: 'hosting' | 'speeches' | 'all';
@@ -109,7 +110,7 @@ export const ReviewsPage: React.FC<ReviewsPageProps> = ({ type = 'all' }) => {
                 <div className="space-y-2 flex-1">
                   <Quote className="w-6 h-6 text-[#18457c]/20 -mb-1" />
                   <p className="text-sm sm:text-base text-[#112b4e] leading-relaxed font-serif line-clamp-3">
-                    ״{review.content}״
+                    ״<FormattedText text={review.content} />״
                   </p>
                   <span className="text-xs font-bold text-[#ea0011] inline-block pt-1 group-hover:underline">
                     קראו עוד...

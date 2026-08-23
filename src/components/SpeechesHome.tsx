@@ -5,6 +5,7 @@ import reviewsSpeechesData from '../data/reviewsSpeeches.json';
 import featuredItems from '../data/featuredItems.json';
 import { SpeechItem, ReviewItem } from '../types';
 import { ReviewModal } from './ReviewModal';
+import FormattedText from './FormattedText';
 
 interface SpeechesHomeProps {
   onNavigate: (tabId: string) => void;
@@ -321,7 +322,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
                 <div className="space-y-2 flex-1">
                   <Quote className="w-6 h-6 text-[#ea0011]/20 -mb-1" />
                   <p className="text-sm sm:text-base text-[#112b4e] leading-relaxed font-serif line-clamp-3">
-                    ״{rev.content}״
+                    ״<FormattedText text={rev.content} />״
                   </p>
                   <span className="text-xs font-bold text-[#ea0011] inline-block pt-1 group-hover:underline">
                     קראו עוד...

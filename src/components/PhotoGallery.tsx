@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, X, MapPin, Calendar, Sparkles, Images, ZoomIn, Layers } from 'lucide-react';
 import galleryData from '../data/gallery.json';
 import { GalleryEventItem } from '../types';
+import FormattedText from './FormattedText';
 
 interface PhotoGalleryProps {
   initialEventId?: string | null;
@@ -154,7 +155,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ initialEventId }) =>
                   <div className="absolute top-3.5 right-3.5 z-10">
                     <span className="px-3 py-1 bg-[#18457c]/90 text-white backdrop-blur-md text-xs font-bold rounded-full border border-white/20 flex items-center gap-1.5 shadow-sm">
                       <Images className="w-3.5 h-3.5 text-[#ffdad5]" />
-                      <span>{photoCount} תמונות</span>
+                      <span>{photoCount === 1 ? 'תמונה אחת' : `${photoCount} תמונות`}</span>
                     </span>
                   </div>
 
@@ -193,7 +194,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ initialEventId }) =>
 
                     {item.description && item.description.trim() !== '' && (
                       <p className="text-xs text-[#425d7e] leading-relaxed line-clamp-2">
-                        {item.description}
+                        <FormattedText text={item.description} />
                       </p>
                     )}
                   </div>
@@ -330,8 +331,8 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({ initialEventId }) =>
                 <h4 className="text-xs font-bold text-[#577291] uppercase tracking-wider">
                   על האירוע:
                 </h4>
-                <p className="text-sm sm:text-base text-[#2d4869] leading-relaxed">
-                  {selectedEvent.description}
+                <p className="text-sm sm:text-base text-[#2d4869] leading-relaxed whitespace-pre-line">
+                  <FormattedText text={selectedEvent.description} />
                 </p>
               </div>
             )}

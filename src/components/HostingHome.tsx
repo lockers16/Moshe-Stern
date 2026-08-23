@@ -5,6 +5,7 @@ import reviewsHostingData from '../data/reviewsHosting.json';
 import featuredItems from '../data/featuredItems.json';
 import { GalleryEventItem, ReviewItem } from '../types';
 import { ReviewModal } from './ReviewModal';
+import FormattedText from './FormattedText';
 
 interface HostingHomeProps {
   onNavigate: (tabId: string, eventId?: string) => void;
@@ -212,7 +213,7 @@ export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
                   <div className="absolute top-3 right-3 z-10">
                     <span className="px-2.5 py-0.5 bg-[#18457c]/90 text-white backdrop-blur-md text-xs font-bold rounded-full border border-white/20 flex items-center gap-1">
                       <Images className="w-3 h-3 text-[#ffdad5]" />
-                      <span>{photoCount} תמונות</span>
+                      <span>{photoCount === 1 ? 'תמונה אחת' : `${photoCount} תמונות`}</span>
                     </span>
                   </div>
                 </div>
@@ -367,7 +368,7 @@ export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
                 <div className="space-y-2 flex-1">
                   <Quote className="w-6 h-6 text-[#18457c]/20 -mb-1" />
                   <p className="text-sm sm:text-base text-[#112b4e] leading-relaxed font-serif line-clamp-3">
-                    ״{rev.content}״
+                    ״<FormattedText text={rev.content} />״
                   </p>
                   <span className="text-xs font-bold text-[#ea0011] inline-block pt-1 group-hover:underline">
                     קראו עוד...
@@ -573,8 +574,8 @@ export const HostingHome: React.FC<HostingHomeProps> = ({ onNavigate }) => {
                 <h4 className="text-xs font-bold text-[#577291] uppercase tracking-wider">
                   על האירוע:
                 </h4>
-                <p className="text-sm sm:text-base text-[#2d4869] leading-relaxed">
-                  {selectedEvent.description}
+                <p className="text-sm sm:text-base text-[#2d4869] leading-relaxed whitespace-pre-line">
+                  <FormattedText text={selectedEvent.description} />
                 </p>
               </div>
             )}
