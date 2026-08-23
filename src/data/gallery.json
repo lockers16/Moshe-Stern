@@ -8,37 +8,12 @@
     "description": "צילום: ארנון בוסאני",
     "categories": "טקסים לעיריית ירושלים",
     "images": [
-      "hosting/communities4-25/ARNO4243-3",
-      "hosting/communities4-25/ARNO4183-2",
-      "hosting/communities4-25/ARNO4274-2",
-      "hosting/communities4-25/ARNO4237-2",
-      "hosting/communities4-25/ARNO4276-2",
-      "hosting/communities4-25/ARNO4295"
-    ]
-  },
-  {
-    "id": "memorial-day-ceremony",
-    "title": "טקס ערב יום הזיכרון לחללי מערכות ישראל",
-    "location": "אמפיתיאטרון עירוני",
-    "date": "אפריל 2024",
-    "description": "מעמד התייחדות וזיכרון בעדינות וברגישות עמוקה, שילוב קטעי קריאה ושירה.",
-    "categories": "טקסי זיכרון, טקסים לעיריית ירושלים",
-    "images": [
-      "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1200&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&auto=format&fit=crop&q=80"
-    ]
-  },
-  {
-    "id": "summer-cultural-festival",
-    "title": "הנחיית מופע פתיחת פסטיבל הקיץ",
-    "location": "מתחם התרבות והמופעים",
-    "date": "יולי 2024",
-    "description": "הנחיה חיה מול קהל של אלפי משתתפים, קטעי קישור מלאי חיוך ואנרגיה.",
-    "categories": "הנחיית מופעים",
-    "images": [
-      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1200&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1200&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=1200&auto=format&fit=crop&q=80"
+      "/hosting/communities4-25/ARNO4243-3.jpg",
+      "/hosting/communities4-25/ARNO4183-2.jpg",
+      "/hosting/communities4-25/ARNO4274-2.jpg",
+      "/hosting/communities4-25/ARNO4237-2.jpg",
+      "/hosting/communities4-25/ARNO4276-2.jpg",
+      "/hosting/communities4-25/ARNO4295.jpg"
     ]
   },
   {
