@@ -1,11 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Images, BookOpen, MessageSquare, Mail } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import heroSlidesData from '../data/heroSlides.json';
 
 interface HeroProps {
   onNavigate: (tabId: string) => void;
 }
 
+interface HeroSlide {
+  id?: string;
+  image: string;
+  alt?: string;
+  caption?: string;
+}
+
+interface HeroConfig {
+  intervalSeconds?: number;
+  slides?: HeroSlide[];
+}
+
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
+  const rawData = heroSlidesData as HeroConfig | HeroSlide[];
+  
+  const slides: HeroSlide[] = Array.isArray(rawData)
+    ? rawData
+    : rawData.slides || [];
+
+  const intervalSeconds = !Array.isArray(rawData) && typeof rawData.intervalSeconds === 'number'
+    ? rawData.intervalSeconds
+    : 5;
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Automatically cycle through slides, and reset the timer whenever the slide index changes (including manual clicks)
+  useEffect(() => {
+    if (slides.length <= 1 || isPaused) return;
+
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    }, Math.max(intervalSeconds, 1) * 1000);
+
+    return () => clearInterval(timer);
+  }, [slides.length, isPaused, currentIndex, intervalSeconds]);
+
+  const currentSlide = slides[currentIndex] || slides[0] || {
+    image: '/hosting-president-house.jpg',
+    alt: 'משה שטרן בהנחיית אירוע בבית הנשיא',
+    caption: 'משה שטרן בהנחיית אירוע בבית הנשיא',
+  };
+
   return (
     <section className="relative overflow-hidden pt-10 pb-16 md:pt-16 md:pb-24 border-b border-[#18457c]/10 bg-gradient-to-b from-[#f5f8fc] to-[#eff4fb]">
       {/* Rich diagonal decorative background lines in blue & red */}
@@ -22,12 +66,6 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           {/* Right Column: Hero Text & 4 Navigation Buttons */}
           <div className="lg:col-span-7 space-y-6 text-right">
             
-            {/* Top Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#18457c]/10 border border-[#18457c]/15 text-[#18457c] text-xs md:text-sm font-bold shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-[#ea0011]" />
-              <span>כתוב • משה שטרן</span>
-            </div>
-
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#112b4e] leading-[1.15] tracking-tight">
               מילים שנוגעות.<br />
@@ -69,13 +107,13 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 <span>כתיבת תוכן ונאומים</span>
               </button>
 
-              {/* 3. אודות משה שטרן */}
+              {/* 3. אודות */}
               <button
                 onClick={() => onNavigate('about')}
                 className="bg-white hover:bg-[#f1f5fa] text-[#112b4e] border-2 border-[#18457c]/20 hover:border-[#18457c] px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer shadow-sm hover:shadow-md"
               >
                 <MessageSquare className="w-4 h-4 text-[#18457c]" />
-                <span>אודות משה שטרן</span>
+                <span>אודות</span>
               </button>
 
               {/* 4. יצירת קשר */}
@@ -84,14 +122,14 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
                 className="bg-[#18457c] hover:bg-[#123662] text-white px-5 py-3.5 rounded-xl font-bold text-sm sm:text-base shadow-md hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2.5 cursor-pointer"
               >
                 <Mail className="w-4 h-4 text-[#ffdad5]" />
-                <span>יצירת קשר וייעוץ</span>
+                <span>דברו איתי</span>
               </button>
 
             </div>
 
           </div>
 
-          {/* Left Column: Hero Visual Showcase */}
+          {/* Left Column: Hero Visual Showcase / Slideshow */}
           <div className="lg:col-span-5 relative">
             <div className="relative mx-auto max-w-md lg:max-w-none">
               
@@ -99,23 +137,63 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
               <div className="absolute -inset-2 bg-gradient-to-tr from-[#ea0011]/15 via-transparent to-[#18457c]/20 rounded-3xl filter blur-sm -z-10" />
               
               {/* Main Visual Box */}
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-[#18457c]/20 bg-[#18457c] aspect-[4/3] group">
-                <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1NOmF-tGbAVynd4Xz4H_zGoAxnQCFljZ7Dj2zoniGimvZEV4t-lm7Pjp1a0ZiN-MWlKekFKTDCD5-tCeoUoX53E3tvLJZouOYb2qNkNmIikrJ2NjoYodj2k5KtDn5x7V48agMM2DPnOXq7QehLh8TxWz2y9amtyg6x6Cf_xEwRESV-XVHAdp2GY_tHqxpJTBI4RNbfGAaDot9cci6SFQ-zThfJEy2XWeQGaPmSTNnltPjXaJGsDr19A"
-                  alt="משה שטרן מנחה אירוע"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-95"
-                />
+              <div 
+                className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-[#18457c]/20 bg-[#18457c] aspect-[4/3] group select-none"
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={currentSlide.image + currentIndex}
+                    src={currentSlide.image}
+                    alt={currentSlide.alt || "משה שטרן בהנחיית אירוע"}
+                    initial={{ opacity: 0, scale: 1.02 }}
+                    animate={{ opacity: 0.95, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                  />
+                </AnimatePresence>
                 
                 {/* Subtle Visual Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#112b4e]/70 via-transparent to-transparent opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#112b4e]/70 via-transparent to-transparent opacity-60 pointer-events-none" />
                 
-                {/* Name Tag at Bottom Corner */}
-                <div className="absolute bottom-3.5 right-4 z-10">
-                  <span className="px-3 py-1 bg-[#18457c]/90 text-white backdrop-blur-md text-xs font-bold rounded-lg border border-white/20 shadow-md">
-                    כתוב • משה שטרן
-                  </span>
-                </div>
+                {/* Caption Tag at Bottom Corner */}
+                {currentSlide.caption && (
+                  <div className="absolute bottom-3.5 right-4 z-10 pointer-events-none">
+                    <AnimatePresence mode="wait">
+                      <motion.span
+                        key={currentSlide.caption + currentIndex}
+                        initial={{ opacity: 0, y: 4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -4 }}
+                        transition={{ duration: 0.3 }}
+                        className="inline-block px-3 py-1 bg-[#18457c]/90 text-white backdrop-blur-md text-xs font-bold rounded-lg border border-white/20 shadow-md"
+                      >
+                        {currentSlide.caption}
+                      </motion.span>
+                    </AnimatePresence>
+                  </div>
+                )}
               </div>
+
+              {/* Indicator dots beneath the carousel - only shown if more than 1 slide exists */}
+              {slides.length > 1 && (
+                <div className="flex items-center justify-center gap-2 pt-3">
+                  {slides.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentIndex(idx)}
+                      aria-label={`עבור לתמונה ${idx + 1}`}
+                      className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                        currentIndex === idx
+                          ? 'w-6 bg-[#18457c]'
+                          : 'w-2 bg-[#18457c]/30 hover:bg-[#18457c]/60'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
 
             </div>
           </div>

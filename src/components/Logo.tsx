@@ -19,10 +19,10 @@ export const Logo: React.FC<LogoProps> = ({
   };
 
   const sizeClasses = {
-    sm: 'h-7 sm:h-8',
-    md: 'h-8 sm:h-9',
-    lg: 'h-10 sm:h-12',
-    xl: 'h-14 sm:h-16',
+    sm: 'h-8 sm:h-9',
+    md: 'h-11 sm:h-13',
+    lg: 'h-14 sm:h-16',
+    xl: 'h-16 sm:h-20',
   };
 
   return (

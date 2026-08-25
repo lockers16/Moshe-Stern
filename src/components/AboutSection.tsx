@@ -1,11 +1,11 @@
 import React from 'react';
-import { UserCheck, Award, HeartHandshake } from 'lucide-react';
+import { UserCheck, Award } from 'lucide-react';
 
 interface AboutSectionProps {
   onNavigateToContact?: () => void;
 }
 
-export const AboutSection: React.FC<AboutSectionProps> = ({ onNavigateToContact }) => {
+export const AboutSection: React.FC<AboutSectionProps> = () => {
   return (
     <section className="py-12 md:py-20 bg-[#f5f8fc] relative overflow-hidden" id="about-section">
       {/* Decorative diagonal stripes in blue & red */}
@@ -58,18 +58,6 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onNavigateToContact 
             <p className="text-base text-[#2d4869] leading-relaxed">
               הגישה שלי משלבת הקשבה מלאה, רגישות ודיוק בפרטים. אני מאמין שאין צורך בקלישאות או מילים מנופחות – העוצמה של נאום או טקס נובעת מפשטות, כנות, דיוק בזמנים וחיבור אותנטי עם הקהל.
             </p>
-
-            {onNavigateToContact && (
-              <div className="pt-3">
-                <button
-                  onClick={onNavigateToContact}
-                  className="bg-[#18457c] hover:bg-[#123662] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-md transition-all cursor-pointer inline-flex items-center gap-2"
-                >
-                  <HeartHandshake className="w-4 h-4 text-[#ea0011]" />
-                  <span>מעבר ליצירת קשר</span>
-                </button>
-              </div>
-            )}
           </div>
 
         </div>

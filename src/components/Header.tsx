@@ -63,12 +63,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           <Logo size="md" className="group-hover:scale-105 transition-transform duration-200" />
 
           <div>
-            <div className="font-black text-xl md:text-2xl tracking-tight text-white flex items-center gap-1.5 font-['Assistant'] leading-tight">
-              <span>כתוב</span>
-              <span className="text-white/80 font-normal text-sm md:text-base hidden sm:inline">|</span>
-              <span className="text-white/90 text-sm md:text-base hidden sm:inline font-semibold">משה שטרן</span>
+            <div className="font-extrabold text-xl sm:text-2xl tracking-tight text-white font-['Assistant'] leading-tight">
+              <span>כָּתוּב</span>
             </div>
-            <div className="text-[10px] sm:text-xs text-white/90 font-medium tracking-wide">
+            <div className="text-xs sm:text-[13px] md:text-sm text-white/90 font-normal tracking-wide whitespace-nowrap">
               נאומים, תוכן והנחייה
             </div>
           </div>
@@ -87,18 +85,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             }`}
           >
             דף הבית
-          </button>
-
-          {/* 2. אודות משה */}
-          <button
-            onClick={() => handleNavClick('about')}
-            className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-              activeTab === 'about'
-                ? 'bg-white/20 text-white font-bold shadow-xs'
-                : 'text-white/90 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            אודות משה
           </button>
 
           {/* Animated Section Content - Subtle & smooth */}
@@ -255,6 +241,18 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             )}
           </AnimatePresence>
 
+          {/* אודות (Leftmost inside nav list) */}
+          <button
+            onClick={() => handleNavClick('about')}
+            className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+              activeTab === 'about'
+                ? 'bg-white/20 text-white font-bold shadow-xs'
+                : 'text-white/90 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            אודות
+          </button>
+
         </nav>
 
         {/* Header Left Actions: Contact Button & Mobile Toggle */}
@@ -299,7 +297,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 activeTab === 'about' ? 'bg-white text-[#112b4e]' : 'bg-white/15 text-white'
               }`}
             >
-              אודות משה
+              אודות
             </button>
           </div>
 

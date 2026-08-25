@@ -115,7 +115,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </button>
               <span>•</span>
               <button onClick={() => onNavigate('about')} className="hover:text-[#ea0011] font-semibold cursor-pointer">
-                אודות משה
+                אודות
               </button>
               <span>•</span>
               <button onClick={() => onNavigate('contact')} className="hover:text-[#ea0011] font-semibold cursor-pointer">

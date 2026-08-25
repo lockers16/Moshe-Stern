@@ -83,7 +83,7 @@ export const SpeechesHome: React.FC<SpeechesHomeProps> = ({ onNavigate }) => {
             <div className="lg:col-span-7 space-y-6 text-right">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ea0011]/10 border border-[#ea0011]/20 text-[#ea0011] text-xs md:text-sm font-bold shadow-sm">
                 <Pencil className="w-4 h-4 text-[#ea0011]" />
-                <span>כתיבת תוכן ונאומים • משה שטרן</span>
+                <span>כתיבת תוכן ונאומים</span>
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#112b4e] leading-[1.2] tracking-tight">
