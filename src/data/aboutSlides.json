@@ -1,0 +1,29 @@
+{
+  "intervalSeconds": 5,
+  "slides": [
+    {
+      "id": "about-slide-1",
+      "image": "/hosting-president-house.jpg",
+      "alt": "משה שטרן בהנחיית טקס ממלכתי",
+      "caption": "הנחיית טקסים ואירועים ממלכתיים"
+    },
+    {
+      "id": "about-slide-2",
+      "image": "/hosting/communities4-25/ARNO4276-2.jpg",
+      "alt": "משה שטרן בעת הנחיית אירוע עיריית ירושלים",
+      "caption": "מפגש ראשי קהילות בכיכר ספרא"
+    },
+    {
+      "id": "about-slide-3",
+      "image": "/hosting/rabbiShagar/shagar5.jpg",
+      "alt": "משה שטרן בטקס חנוכת מצפה",
+      "caption": "טקס חנוכת מצפה הרב שג\"ר"
+    },
+    {
+      "id": "about-slide-4",
+      "image": "/hosting-home1.jpg",
+      "alt": "משה שטרן בהנחיית אירוע",
+      "caption": "חיבור אותנטי ודיוק בפרטים"
+    }
+  ]
+}

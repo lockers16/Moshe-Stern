@@ -73,11 +73,10 @@ export function App({ initialTab }: AppProps) {
 
       {/* Main Content Area based on activeTab */}
       <main className="flex-grow">
-        {/* 1. Main Portal Home (Hero + About) */}
+        {/* 1. Main Portal Home (Hero only) */}
         {activeTab === 'home' && (
           <div className="space-y-0">
             <Hero onNavigate={(tab) => handleNavigate(tab)} />
-            <AboutSection onNavigateToContact={() => handleNavigate('contact')} />
           </div>
         )}
 
